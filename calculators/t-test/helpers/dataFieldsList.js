@@ -11,6 +11,7 @@ const fields = {
     label: 'Št. enot',
     helperText: 'Število enot v vzorcu',
     name: 'number_of_units',
+    error: false,
     id: 'number_of_units',
     type: 'number', // HTML input type
     validation: {

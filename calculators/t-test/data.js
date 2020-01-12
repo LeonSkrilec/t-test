@@ -7,17 +7,14 @@ import { setSampleData } from '../../store/calculators/t-test/actionCreators';
 
 import { getFields } from './helpers/dataFieldsList';
 import DataInput from './components/DataInput';
+import dataValidation from './helpers/dataValidation';
 
 class Data extends React.Component {
   // Data collection point.
-  // TODO: Make proportion validation to be between 0-100 or 0-1.
   constructor(props) {
     super(props);
 
-    if (!this.props.number_of_samples || !this.props.proportions_or_means) {
-      return;
-    }
-
+    this.validation = new dataValidation();
     // We retrieve fields definitions
     const columnFields = getFields({
       proportions_or_means: this.props.proportions_or_means,
@@ -27,14 +24,6 @@ class Data extends React.Component {
     this.state = {
       ...columnFields
     };
-  }
-
-  componentDidMount() {
-    // TODO: prevent component from rendering if not required values in state. You should do that in Index.js in getInitialProps.
-    // Currently it renders and than routes back to previous page
-    if (!this.props.number_of_samples || !this.props.proportions_or_means) {
-      this.previousClickHandler();
-    }
   }
 
   handleChange = event => {
@@ -53,9 +42,11 @@ class Data extends React.Component {
       if (fieldToUpdate) break;
     }
 
+    if (!fieldToUpdate)
+      return console.warn(`Could not find field with id ${id} in local state.`);
+
     // If input type is number, change value to actual number
     const val = type === 'number' ? parseFloat(value) : value;
-
     fieldToUpdate.value = val;
   };
 
@@ -69,7 +60,22 @@ class Data extends React.Component {
   onSubmit = e => {
     e.preventDefault();
     // TODO: Data validation + send to Redux
+    let validationResult;
+    // TODO: Update fields errors in nice way
+    for (let i = 0; i < this.state.columns.length; i++) {
+      let fields = this.state.columns[i].fields;
+      for (let j = 0; j < fields.length; j++) {
+        let field = fields[j];
+        validationResult = this.validation.validate({ field });
+        if (!validationResult) {
+          //
+          // this does not update state or what?
+          field.error = true;
+        }
+      }
+    }
 
+    console.log(validationResult, 'validation');
     console.log('validattion ...');
   };
 

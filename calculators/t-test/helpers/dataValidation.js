@@ -1,16 +1,15 @@
-const validate = ({ data, proportions_or_means, number_of_samples }) => {
-  // Determine what we have to validate.
-  //
-};
+import SimpleReactValidator from 'simple-react-validator';
 
-const commonValidation = () => {};
+class DataValidation {
+  constructor() {
+    this.validator = new SimpleReactValidator();
+  }
 
-const oneSampleProportionsValidation = () => {};
+  validate({ field }) {
+    // Determine what we have to validate.
+    const valid = this.validator.check(field.value, field.validation.rules);
+    return valid;
+  }
+}
 
-const twoSampleProportionsValidation = () => {};
-
-const oneSampleMeansValidation = () => {};
-
-const twoSampleMeansValidation = () => {};
-
-export { validate };
+export default DataValidation;

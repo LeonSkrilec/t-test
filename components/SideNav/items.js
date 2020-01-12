@@ -1,6 +1,6 @@
 export default [
   {
-    url: 'kalkulatorji/t-test',
+    url: '/calculators/t-test',
     label: 'Studentov t-test'
   }
 ];

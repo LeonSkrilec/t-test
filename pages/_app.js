@@ -1,10 +1,12 @@
 import NextApp from 'next/app';
 import React from 'react';
+import { Provider } from 'react-redux';
+import withReduxStore from '../store/withReduxStore';
 import ThemeProvider from '../theme/Provider';
 import Master from '../layouts/Master';
 import DrawerLayout from '../layouts/DrawerLayout';
 
-export default class App extends NextApp {
+class App extends NextApp {
   // remove it here
   componentDidMount() {
     // eslint-disable-next-line no-undef
@@ -14,16 +16,20 @@ export default class App extends NextApp {
   }
 
   render() {
-    const { Component, pageProps } = this.props;
+    const { Component, pageProps, reduxStore } = this.props;
 
     return (
       <Master>
-        <DrawerLayout>
-          <ThemeProvider>
-            <Component {...pageProps} />
-          </ThemeProvider>
-        </DrawerLayout>
+        <ThemeProvider>
+          <DrawerLayout>
+            <Provider store={reduxStore}>
+              <Component {...pageProps} />
+            </Provider>
+          </DrawerLayout>
+        </ThemeProvider>
       </Master>
     );
   }
 }
+
+export default withReduxStore(App);

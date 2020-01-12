@@ -1,19 +1,24 @@
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import {
+  Drawer,
+  CssBaseline,
+  AppBar,
+  Toolbar,
+  Divider,
+  IconButton,
+  Link as MaterialLink
+} from '@material-ui/core';
 
+import {
+  Menu as MenuIcon,
+  ChevronLeft,
+  ChevronRight
+} from '@material-ui/icons';
+
+import Link from 'next/link';
 import SideNav from '../components/SideNav';
-
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
   root: {
@@ -103,9 +108,11 @@ export default function PersistentDrawerLeft(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            T-test.si
-          </Typography>
+          <Link href="/" passHref>
+            <MaterialLink variant="h6" color="secondary">
+              T-test.si
+            </MaterialLink>
+          </Link>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -119,11 +126,7 @@ export default function PersistentDrawerLeft(props) {
       >
         <div className={classes.drawerHeader}>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
+            {theme.direction === 'ltr' ? <ChevronLeft /> : <ChevronRight />}
           </IconButton>
         </div>
         <Divider />

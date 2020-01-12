@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Router from 'next/router';
+import { connect } from 'react-redux';
 import {
   Grid,
   Container,
@@ -7,33 +9,62 @@ import {
   FormControlLabel,
   FormControl,
   FormLabel,
-  Button,
   Box
 } from '@material-ui/core';
+import {
+  setNumberOfSamples,
+  setCalculationSubject,
+  setCalculatorError
+} from '../../store/calculators/t-test/actionCreators';
 
-export default class subject extends Component {
+import PageControls from './components/PageControls';
+
+class Subject extends Component {
   constructor(props) {
     super(props);
+  }
+  handleChange = event => {
+    const { value, name } = event.target;
+    // setNumberOfSamples and setCalculationSubject are dipsatch methods connected to REDUX.
+    // They are defined at the bottom with redux connect() function
+    // On value change we dispatch an action to REDUX store which will trigger a reducer and update value in the application state
+    if (name === 'number_of_samples')
+      this.props.setNumberOfSamples(parseInt(value));
+    else this.props.setCalculationSubject(value);
+  };
+  previousClickHandler = () => {
+    const previousPageName = 'intro';
+    Router.push(
+      `/calculators/[...slug]`,
+      `/calculators/t-test/${previousPageName}`
+    );
+  };
+  nextClickHandler = () => {
+    // Data validation.
+    if (
+      [1, 2].includes(this.props.number_of_samples) &&
+      ['means', 'proportions'].includes(this.props.proportions_or_means)
+    ) {
+      // Data is valid. Proceed to next route
+      this.props.setCalculatorError({ type: '', text: '' });
+      const nextPageName = 'data';
+      return Router.push(
+        `/calculators/[...slug]`,
+        `/calculators/t-test/${nextPageName}`
+      );
+    } else {
+      // Set error in REDUX store
+      this.props.setCalculatorError({
+        type: 'form_invalid',
+        text: 'Predno nadaljujete izberite vrednosti.'
+      });
+    }
+  };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-  handleChange(event, radioName) {
-    const value = event.target.value;
-    const newCalculatorState = {
-      ...this.props.calculator,
-      number_of_samples: value
-    };
-    this.props.updateCalculatorData(newCalculatorState);
-  }
-  handleSubmit() {
-    console.log('check data and go next');
-    this.props.nextStep();
-  }
   render() {
     return (
       <Container maxWidth="sm">
-        <Box my={6}>
+        <Box mt={6} mb={3}>
           <form noValidate autoComplete="off">
             <Grid container spacing={3}>
               <Grid item xs={6}>
@@ -50,11 +81,13 @@ export default class subject extends Component {
                       value="1"
                       control={<Radio />}
                       label="En vzorec"
+                      checked={this.props.number_of_samples === 1}
                     />
                     <FormControlLabel
                       value="2"
                       control={<Radio />}
                       label="Dva vzorca"
+                      checked={this.props.number_of_samples === 2}
                     />
                   </RadioGroup>
                 </FormControl>
@@ -68,46 +101,51 @@ export default class subject extends Component {
                     aria-label="difference-of-proportions-or-means"
                     name="difference_between"
                     onChange={this.handleChange}
-                    value={this.props.calculator.difference_between}
                   >
                     <FormControlLabel
                       value="means"
                       control={<Radio />}
                       label="Razlika povprečji"
+                      checked={this.props.proportions_or_means === 'means'}
                     />
                     <FormControlLabel
                       value="proportions"
                       control={<Radio />}
                       label="Razlika deležev"
+                      checked={
+                        this.props.proportions_or_means === 'proportions'
+                      }
                     />
                   </RadioGroup>
                 </FormControl>
               </Grid>
             </Grid>
 
-            <Grid
-              container
-              spacing={3}
-              alignItems="center"
-              justify="center"
-              style={{ marginTop: '20px' }}
-            >
-              <Grid item xs={2}>
-                <Button onClick={this.props.prevStep}>Nazaj</Button>
-              </Grid>
-              <Grid item xs={2}>
-                <Button
-                  onClick={this.handleSubmit}
-                  variant="contained"
-                  color="primary"
-                >
-                  Naprej
-                </Button>
-              </Grid>
-            </Grid>
+            <PageControls
+              nextText="naprej"
+              previousPage="nazaj"
+              nextClickHandler={this.nextClickHandler}
+              previousClickHandler={this.previousClickHandler}
+            ></PageControls>
           </form>
         </Box>
       </Container>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    number_of_samples: state.calculators['t-test'].number_of_samples,
+    proportions_or_means: state.calculators['t-test'].proportions_or_means,
+    error: state.calculators['t-test'].error
+  };
+};
+
+const mapDispatchToProps = {
+  setNumberOfSamples,
+  setCalculationSubject,
+  setCalculatorError
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Subject);

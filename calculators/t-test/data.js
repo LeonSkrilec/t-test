@@ -60,7 +60,16 @@ class Data extends React.Component {
 
     let isDataValid = true;
     const validatedFields = this.state.fields.map(field => {
+      console.log(
+        'validating ',
+        field.name,
+        ' with value ',
+        field.value,
+        ' against rules ',
+        field.validation.rules
+      );
       const isFieldValid = this.validation.validate(field);
+      console.log('validation is: ', isFieldValid);
       if (!isFieldValid) {
         isDataValid = false;
         field.error = true;

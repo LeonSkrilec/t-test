@@ -20,14 +20,14 @@ const fields = {
     }
   },
   mean: {
-    // Decimal number
+    // Decimal number (either positive or negative)
     value: '',
     type: 'number',
     label: 'Aritmetična sredina',
     name: 'mean',
     id: 'mean',
     validation: {
-      rules: 'required|numeric',
+      rules: ['required', { regex: /^-?[0-9]\d*(\.\d+)?$/ }],
       errorMessage: 'Vnesite število.'
     }
   },
@@ -65,7 +65,7 @@ const fields = {
     id: 'hypothetical_mean',
     helperText: 'Povprečje s katerim primerjamo vzorčno povprečje',
     validation: {
-      rules: 'required|numeric',
+      rules: ['required', { regex: /^-?[0-9]\d*(\.\d+)?$/ }],
       errorMessage: 'Vnesite število.'
     }
   },

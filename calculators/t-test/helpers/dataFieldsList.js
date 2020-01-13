@@ -7,7 +7,7 @@
 const fields = {
   number_of_units: {
     // Positive whole number
-    value: null,
+    value: '',
     label: 'Št. enot',
     helperText: 'Število enot v vzorcu',
     name: 'number_of_units',
@@ -15,58 +15,63 @@ const fields = {
     id: 'number_of_units',
     type: 'number', // HTML input type
     validation: {
-      rules: 'required|integer|min:0,num'
+      rules: 'required|integer|min:0,num',
+      errorMessage: 'Vnesite pozitivno celo število.'
     }
   },
   mean: {
     // Decimal number
-    value: null,
+    value: '',
     type: 'number',
     label: 'Aritmetična sredina',
     name: 'mean',
     id: 'mean',
     validation: {
-      rules: 'required|numeric'
+      rules: 'required|numeric',
+      errorMessage: 'Vnesite število.'
     }
   },
   variance: {
     // Positive Decimal number
-    value: null,
+    value: '',
     type: 'number',
     label: 'Elementarna varianca',
     name: 'variance',
     id: 'variance',
     validation: {
-      rules: 'required|numeric|min:0,num'
+      rules: 'required|numeric|min:0,num',
+      errorMessage: 'Vnesite pozitivno število.'
     }
   },
   proportion: {
     // Decimal number between 0 and 100
-    value: null,
+    value: '',
     type: 'number',
     label: 'Delež (%)',
     name: 'proportion',
     id: 'proportion',
     helperText: 'Delež dobljen na vzorcu. Vnesi število med 0 in 100.',
     validation: {
-      rules: 'required|numeric|min:0,num|max:100,num'
+      rules: 'required|numeric|min:0,num|max:100,num',
+      errorMessage: 'Vnesite število med 0 in 100.'
     }
   },
   hypothetical_mean: {
     // Decimal number
-    value: null,
+    value: '',
     type: 'number',
     label: 'Hipotetično povprečje',
     name: 'hypothetical_mean',
     id: 'hypothetical_mean',
     helperText: 'Povprečje s katerim primerjamo vzorčno povprečje',
     validation: {
-      rules: 'required|numeric'
+      rules: 'required|numeric',
+      errorMessage: 'Vnesite število.'
     }
   },
   hypothetical_proportion: {
     // Decimal number between 0 and 100
-    value: null,
+    value: '',
     type: 'number',
     label: 'Hipotetični delež (%)',
     name: 'hypothetical_proportion',
@@ -74,66 +79,54 @@ const fields = {
     helperText:
       'Delež s katerim primerjamo vzorčni delež. Vnesi število med 0 in 100.',
     validation: {
-      rules: 'required|numeric|min:0,num|max:100,num'
+      rules: 'required|numeric|min:0,num|max:100,num',
+      errorMessage: 'Vnesite število med 0 in 100'
     }
   }
 };
 
 // Here we map which fields go to certain combination of means/proportions and number of samples
+// We also set column property in which column should fields be placed
 const fieldsMap = [
   {
     number_of_samples: 1,
     proportions_or_means: 'means',
-    columns: [
-      {
-        fields: [fields.number_of_units, fields.mean, fields.variance]
-      },
-      {
-        fields: [fields.hypothetical_mean]
-      }
+    fields: [
+      { ...fields.number_of_units, column: 0 },
+      { ...fields.mean, column: 0 },
+      { ...fields.variance, column: 0 },
+      { ...fields.hypothetical_mean, column: 1 }
     ]
   },
   {
     number_of_samples: 2,
     proportions_or_means: 'means',
-    columns: [
-      {
-        fields: [fields.number_of_units, fields.mean, fields.variance]
-      },
-      {
-        fields: [
-          { ...fields.number_of_units, id: 'number-of-units-1' },
-          { ...fields.mean, id: 'mean-1' },
-          { ...fields.variance, id: 'variance-1' }
-        ]
-      }
+    fields: [
+      { ...fields.number_of_units, column: 0 },
+      { ...fields.mean, column: 0 },
+      { ...fields.variance, column: 0 },
+      { ...fields.number_of_units, id: 'number-of-units-1', column: 1 },
+      { ...fields.mean, id: 'mean-1', column: 1 },
+      { ...fields.variance, id: 'variance-1', column: 1 }
     ]
   },
   {
     number_of_samples: 1,
     proportions_or_means: 'proportions',
-    columns: [
-      {
-        fields: [fields.number_of_units, fields.proportion]
-      },
-      {
-        fields: [fields.hypothetical_proportion]
-      }
+    fields: [
+      { ...fields.number_of_units, column: 0 },
+      { ...fields.proportion, column: 0 },
+      { ...fields.hypothetical_proportion, column: 1 }
     ]
   },
   {
     number_of_samples: 2,
     proportions_or_means: 'proportions',
-    columns: [
-      {
-        fields: [fields.number_of_units, fields.proportion]
-      },
-      {
-        fields: [
-          { ...fields.number_of_units, id: 'number-of-units-1' },
-          { ...fields.proportion, id: 'proportion-1' }
-        ]
-      }
+    fields: [
+      { ...fields.number_of_units, column: 0 },
+      { ...fields.proportion, column: 0 },
+      { ...fields.number_of_units, id: 'number-of-units-1', column: 1 },
+      { ...fields.proportion, id: 'proportion-1', column: 1 }
     ]
   }
 ];

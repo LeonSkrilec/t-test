@@ -1,6 +1,8 @@
-import Calculator from '../../calculators/t-test/Index';
+import Ttest from '../../calculators/t-test/Index';
 import Container from '@material-ui/core/Container';
 import { useRouter } from 'next/router';
+import { connect } from 'react-redux';
+import Page404 from '../../components/404';
 
 const DynamicCalculator = () => {
   // Dynamic calculator routing
@@ -12,13 +14,35 @@ const DynamicCalculator = () => {
   // Would you abstract routing away and just expose routing methods to calculators?
 
   const router = useRouter();
+
   const { slug } = router.query;
+  // Slug can be either array or string.
+  let calculatorName, calculatorPage;
+  if (typeof slug === 'object') {
+    calculatorName = slug[0];
+    calculatorPage = slug[1];
+  } else {
+    calculatorName = slug;
+    calculatorPage = '';
+  }
+
+  const calculatorMap = {
+    't-test': Ttest
+  };
+
+  const ComponentToRender = calculatorMap[calculatorName] || Page404;
 
   return (
     <Container>
-      <Calculator page={slug[1]}></Calculator>
+      <ComponentToRender page={calculatorPage}></ComponentToRender>
     </Container>
   );
 };
 
-export default DynamicCalculator;
+const mapStateToProps = state => {
+  return {
+    calculatorsList: state.calculatorList
+  };
+};
+
+export default connect(mapStateToProps)(DynamicCalculator);

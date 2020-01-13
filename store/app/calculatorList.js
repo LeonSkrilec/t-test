@@ -1,26 +1,6 @@
 const calculators = [
   {
-    slug: 't-test',
-    folder: 't-test',
-    settings: 'settings',
-    steps: {
-      intro: {
-        component: 'intro',
-        order: 1
-      },
-      subject: {
-        component: 'subject',
-        order: 2
-      },
-      data: {
-        component: 'data',
-        order: 3
-      },
-      settings: {
-        component: 'settings',
-        order: 4
-      }
-    }
+    slug: 't-test'
   }
 ];
 

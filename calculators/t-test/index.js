@@ -1,7 +1,8 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import CalculatorPage from './Page';
 import { connect } from 'react-redux';
+import Router from 'next/router';
+import CalculatorPage from './Page';
 import CalculatorError from './components/CalculatorError';
 // Calculator is basically a multi-step form. You take input from user and make some calculation on submit.
 // Than you display results
@@ -12,13 +13,29 @@ TODO:
   - Determine which page should be loaded regarding to state data
 */
 
-class Index extends React.Component {
+class TtestIndex extends React.Component {
   constructor(props) {
     super(props);
     // props.page holds page value. And it changes on routing
     // But we should check if we have required data in redux store to be on that page.
     // Because pages in calculator are inter-dependent. Some pages rely on others for data
     // We can just save on which page we left of in tth
+
+    // Če v redux store-u ni potrebne vrednosti za render te strani, preusmeri na začetno stran.
+    this.state = {
+      pageChecked: false
+    };
+  }
+
+  componentDidMount() {
+    if (this.props.page === 'data') {
+      if (
+        !this.props.calculatorState.number_of_samples ||
+        !this.props.calculatorState.proportions_or_means
+      )
+        Router.push(`/calculators/[...slug]`, `/calculators/t-test/subject`);
+    }
+    this.setState({ pageChecked: true });
   }
 
   render() {
@@ -27,10 +44,13 @@ class Index extends React.Component {
         <Typography component="h2" variant="h2" gutterBottom align="center">
           Studentov t-test
         </Typography>
-        <CalculatorPage page={this.props.page}></CalculatorPage>
+        {this.state.pageChecked && (
+          <CalculatorPage page={this.props.page}></CalculatorPage>
+        )}
+
         <CalculatorError
-          text={this.props.error.text}
-          type={this.props.error.type}
+          text={this.props.calculatorState.error.text}
+          type={this.props.calculatorState.error.type}
         ></CalculatorError>
       </>
     );
@@ -39,8 +59,8 @@ class Index extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    error: state.calculators['t-test'].error
+    calculatorState: state.calculators['t-test']
   };
 };
 
-export default connect(mapStateToProps)(Index);
+export default connect(mapStateToProps)(TtestIndex);

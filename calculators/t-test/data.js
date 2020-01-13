@@ -1,53 +1,51 @@
 import React from 'react';
 import Router from 'next/router';
-import { Container, Grid, FormLabel, TextField } from '@material-ui/core';
+import { Container, Grid, FormLabel } from '@material-ui/core';
 import PageControls from './components/PageControls';
 import { connect } from 'react-redux';
 import { setSampleData } from '../../store/calculators/t-test/actionCreators';
 
 import { getFields } from './helpers/dataFieldsList';
 import DataInput from './components/DataInput';
-import dataValidation from './helpers/dataValidation';
+import validator from './helpers/dataValidator';
 
 class Data extends React.Component {
   // Data collection point.
   constructor(props) {
     super(props);
 
-    this.validation = new dataValidation();
-    // We retrieve fields definitions
-    const columnFields = getFields({
-      proportions_or_means: this.props.proportions_or_means,
-      number_of_samples: this.props.number_of_samples
+    this.validation = new validator();
+    // We retrieve field map from dataFieldList
+    const fieldMap = getFields({
+      proportions_or_means: props.proportions_or_means,
+      number_of_samples: props.number_of_samples
     });
 
     this.state = {
-      ...columnFields
+      fields: fieldMap.fields
     };
   }
 
   handleChange = event => {
-    // We update local state. Which field to update?
-    // Find field by id in local state and update its value property
-
+    // Find field by id in local state and update its value property via this.setState()
     const { type, name, value, id, attributes } = event.target;
-
-    // Is this searching for which field to update optimal? Maybe refactor ...
-    let fieldToUpdate;
-    for (let i = 0; i < this.state.columns.length; i++) {
-      const column = this.state.columns[i];
-      fieldToUpdate = column.fields.find(field => {
-        return field.id === id;
-      });
-      if (fieldToUpdate) break;
-    }
-
-    if (!fieldToUpdate)
-      return console.warn(`Could not find field with id ${id} in local state.`);
-
-    // If input type is number, change value to actual number
+    // If input type is number, parse value to actual number type
     const val = type === 'number' ? parseFloat(value) : value;
-    fieldToUpdate.value = val;
+    const updatedFields = this.state.fields.map(field => {
+      if (field.id === id) {
+        field.value = val;
+
+        // Reset error state
+        if (field.error) {
+          field.error = false;
+          field.helperText = field.hadHelperText;
+        }
+      }
+
+      return field;
+    });
+
+    this.setState({ fields: updatedFields });
   };
 
   previousClickHandler = () => {
@@ -59,37 +57,38 @@ class Data extends React.Component {
   };
   onSubmit = e => {
     e.preventDefault();
-    // TODO: Data validation + send to Redux
-    let validationResult;
-    // TODO: Update fields errors in nice way
-    for (let i = 0; i < this.state.columns.length; i++) {
-      let fields = this.state.columns[i].fields;
-      for (let j = 0; j < fields.length; j++) {
-        let field = fields[j];
-        validationResult = this.validation.validate({ field });
-        if (!validationResult) {
-          //
-          // this does not update state or what?
-          field.error = true;
-        }
-      }
-    }
 
-    console.log(validationResult, 'validation');
-    console.log('validattion ...');
+    let isDataValid = true;
+    const validatedFields = this.state.fields.map(field => {
+      const isFieldValid = this.validation.validate(field);
+      if (!isFieldValid) {
+        isDataValid = false;
+        field.error = true;
+        field.hadHelperText = field.helperText;
+        field.helperText = field.validation.errorMessage;
+      }
+      return field;
+    });
+
+    return isDataValid
+      ? this.onDataValid()
+      : this.setState({ fields: validatedFields });
   };
 
-  renderFields(fields) {
-    // Render TextFields
-    return fields.map((field, index) => {
-      return (
-        <DataInput
-          key={index}
-          {...field}
-          onChange={this.handleChange}
-        ></DataInput>
-      );
-    });
+  onDataValid() {
+    // TODO: 1. Update calculator data in store. 2. Route to next page
+    console.log('data is valid! Lets go to next page ho.');
+  }
+
+  renderField(field) {
+    // Render TextField
+    return (
+      <DataInput
+        key={field.id}
+        {...field}
+        onChange={this.handleChange}
+      ></DataInput>
+    );
   }
 
   render() {
@@ -101,13 +100,19 @@ class Data extends React.Component {
               <FormLabel component="p" style={{ marginBottom: '15px' }}>
                 Opisne statistike prvega vzorca
               </FormLabel>
-              {this.renderFields(this.state.columns[0].fields)}
+              {this.state.fields.map(field =>
+                field.column === 0 ? this.renderField(field) : null
+              )}
             </Grid>
             <Grid item xs={6}>
               <FormLabel component="p" style={{ marginBottom: '15px' }}>
-                Opisne statistike drugega vzorca
+                {this.props.number_of_samples === 2
+                  ? 'Opisne statistike drugega vzorca'
+                  : 'Hipotetična vrednost'}
               </FormLabel>
-              {this.renderFields(this.state.columns[1].fields)}
+              {this.state.fields.map(field =>
+                field.column === 1 ? this.renderField(field) : null
+              )}
             </Grid>
           </Grid>
 
@@ -129,7 +134,9 @@ const mapStateToProps = state => {
     error: state.calculators['t-test'].error,
     number_of_samples: state.calculators['t-test'].number_of_samples,
     proportions_or_means: state.calculators['t-test'].proportions_or_means,
-    samples: state.calculators['t-test'].samples
+    samples: state.calculators['t-test'].samples,
+    hypothetical_mean: state.calculators['t-test'].hypothetical_mean,
+    hypothetical_proportion: state.calculators['t-test'].hypothetical_proportion
   };
 };
 

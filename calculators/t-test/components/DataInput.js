@@ -13,6 +13,8 @@ function DataInput(props) {
       margin="normal"
       name={props.name}
       onChange={props.onChange}
+      error={props.error}
+      value={props.value}
     />
   );
 }

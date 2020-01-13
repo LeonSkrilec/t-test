@@ -35,7 +35,7 @@ class Subject extends Component {
   previousClickHandler = () => {
     const previousPageName = 'intro';
     Router.push(
-      `/calculators/[...slug]`,
+      `/calculators/[slug]/[page]`,
       `/calculators/t-test/${previousPageName}`
     );
   };
@@ -49,7 +49,7 @@ class Subject extends Component {
       this.props.setCalculatorError({ type: '', text: '' });
       const nextPageName = 'data';
       return Router.push(
-        `/calculators/[...slug]`,
+        `/calculators/[slug]/[page]`,
         `/calculators/t-test/${nextPageName}`
       );
     } else {

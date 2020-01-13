@@ -10,7 +10,7 @@ export default function SideNav() {
     <List>
       {items.map(item => (
         <ListItem button key={item.url}>
-          <Link href="/calculators/[...slug]" as={item.url}>
+          <Link href="/calculators/[slug]" as={item.url}>
             <Typography component="a">{item.label}</Typography>
           </Link>
         </ListItem>

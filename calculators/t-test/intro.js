@@ -23,7 +23,7 @@ class Intro extends React.Component {
         </Typography>
         <Box my={2} align="center">
           <Link
-            href="/calculators/[...slug]"
+            href="/calculators/[slug]/[page]"
             as="/calculators/t-test/subject"
             passHref
           >

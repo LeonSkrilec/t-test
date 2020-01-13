@@ -51,7 +51,7 @@ class Data extends React.Component {
   previousClickHandler = () => {
     const previousPageName = 'subject';
     Router.push(
-      `/calculators/[...slug]`,
+      `/calculators/[slug]/[page]`,
       `/calculators/t-test/${previousPageName}`
     );
   };

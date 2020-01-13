@@ -11,8 +11,11 @@ const DynamicCalculator = () => {
   // We load appropriate component based on route and pass sub-page to calculator
   // So each calculator is responsible for internal routing. Is this optimal?
 
-  // Would you abstract routing away and just expose routing methods to calculators?
+  const calculatorMap = {
+    't-test': Ttest
+  };
 
+  // Would you abstract routing away and just expose routing methods to calculators?
   const router = useRouter();
 
   const { slug } = router.query;
@@ -25,10 +28,6 @@ const DynamicCalculator = () => {
     calculatorName = slug;
     calculatorPage = '';
   }
-
-  const calculatorMap = {
-    't-test': Ttest
-  };
 
   const ComponentToRender = calculatorMap[calculatorName] || Page404;
 

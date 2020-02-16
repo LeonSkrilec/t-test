@@ -8,7 +8,7 @@ const fields = {
   number_of_units: {
     // Positive whole number
     value: '',
-    label: 'Št. enot',
+    label: 'Velikost vzorca',
     helperText: 'Število enot v vzorcu',
     name: 'number_of_units',
     error: false,
@@ -27,7 +27,7 @@ const fields = {
     name: 'mean',
     id: 'mean',
     validation: {
-      rules: ['required', { regex: /^-?[0-9]\d*(\.\d+)?$/ }],
+      rules: ['required', { regex: /^-?[0-9]\d*(\.\d+)?$/ }], // Regex to allow negative and positive numbers
       errorMessage: 'Vnesite število.'
     }
   },
@@ -65,7 +65,7 @@ const fields = {
     id: 'hypothetical_mean',
     helperText: 'Povprečje s katerim primerjamo vzorčno povprečje',
     validation: {
-      rules: ['required', { regex: /^-?[0-9]\d*(\.\d+)?$/ }],
+      rules: ['required', { regex: /^-?[0-9]\d*(\.\d+)?$/ }], // Regex to allow negative and positive numbers
       errorMessage: 'Vnesite število.'
     }
   },

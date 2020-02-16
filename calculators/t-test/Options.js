@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import {
   Container,
   Grid,
@@ -6,20 +8,29 @@ import {
   FormLabel,
   FormControlLabel,
   RadioGroup,
-  Radio,
-  Button
+  Radio
 } from '@material-ui/core';
 
-export default class settings extends React.Component {
+import { setOptions } from '../../store/calculators/t-test/actionCreators';
+import PageControls from './components/PageControls';
+import { changeCalculatorStep } from '../../support/routing';
+
+class Options extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(event, radioName) {
-    console.log(event, radioName);
+  handleChange(event) {
+    const { value, name } = event.target;
+
+    console.log(value, name);
+
+    // this.props.setOptions({[radioName]: value});
   }
-  handleSubmit() {
+  nextClickHandler() {
+    // 1. check
+    // 2. If data valid
     console.log('do calculate ...');
   }
   render() {
@@ -129,28 +140,26 @@ export default class settings extends React.Component {
               </FormControl>
             </Grid>
           </Grid>
-          <Grid
-            container
-            spacing={3}
-            alignItems="center"
-            justify="center"
-            style={{ marginTop: '20px' }}
-          >
-            <Grid item xs={2}>
-              <Button onClick={this.props.prevStep}>Nazaj</Button>
-            </Grid>
-            <Grid item xs={2}>
-              <Button
-                onClick={this.handleSubmit}
-                variant="contained"
-                color="primary"
-              >
-                Izračunaj
-              </Button>
-            </Grid>
-          </Grid>
+          <PageControls
+            nextText="Izračunaj"
+            previousPage="nazaj"
+            nextClickHandler={this.nextClickHandler}
+            previousClickHandler={() => changeCalculatorStep('t-test', 'data')}
+          ></PageControls>
         </form>
       </Container>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    options: state.calculators['t-test'].options
+  };
+};
+
+const mapDispatchToProps = {
+  setOptions
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Options);

@@ -1,5 +1,4 @@
 import React from 'react';
-import Router from 'next/router';
 import { Container, Grid, FormLabel } from '@material-ui/core';
 import PageControls from './components/PageControls';
 import { connect } from 'react-redux';
@@ -8,6 +7,7 @@ import { setSampleData } from '../../store/calculators/t-test/actionCreators';
 import { getFields } from './helpers/dataFieldsList';
 import DataInput from './components/DataInput';
 import validator from './helpers/dataValidator';
+import { changeCalculatorStep } from '../../support/routing';
 
 class Data extends React.Component {
   // Data collection point.
@@ -28,7 +28,7 @@ class Data extends React.Component {
 
   handleChange = event => {
     // Find field by id in local state and update its value property via this.setState()
-    const { type, name, value, id, attributes } = event.target;
+    const { type, value, id } = event.target;
     // If input type is number, parse value to actual number type
     const val = type === 'number' ? parseFloat(value) : value;
     const updatedFields = this.state.fields.map(field => {
@@ -48,13 +48,6 @@ class Data extends React.Component {
     this.setState({ fields: updatedFields });
   };
 
-  previousClickHandler = () => {
-    const previousPageName = 'subject';
-    Router.push(
-      `/calculators/[slug]/[page]`,
-      `/calculators/t-test/${previousPageName}`
-    );
-  };
   onSubmit = e => {
     e.preventDefault();
 
@@ -69,7 +62,7 @@ class Data extends React.Component {
         field.validation.rules
       );
       const isFieldValid = this.validation.validate(field);
-      console.log('validation is: ', isFieldValid);
+      // console.log('validation is: ', isFieldValid);
       if (!isFieldValid) {
         isDataValid = false;
         field.error = true;
@@ -87,6 +80,8 @@ class Data extends React.Component {
   onDataValid() {
     // TODO: 1. Update calculator data in store. 2. Route to next page
     console.log('data is valid! Lets go to next page ho.');
+    this.props.setStepCompleted({ name: 'data' });
+    return changeCalculatorStep('t-test', 'options');
   }
 
   renderField(field) {
@@ -129,7 +124,9 @@ class Data extends React.Component {
             nextText="naprej"
             previousPage="nazaj"
             nextClickHandler={this.nextClickHandler}
-            previousClickHandler={this.previousClickHandler}
+            previousClickHandler={() =>
+              changeCalculatorStep('t-test', 'subject')
+            }
             nextButtonType="submit"
           ></PageControls>
         </form>

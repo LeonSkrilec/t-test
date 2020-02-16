@@ -9,11 +9,11 @@ export default function SideNav() {
   return (
     <List>
       {items.map(item => (
-        <ListItem button key={item.url}>
-          <Link href="/calculators/[slug]" as={item.url}>
+        <Link href="/calculators/[slug]" as={item.url} key={item.url}>
+          <ListItem button>
             <Typography component="a">{item.label}</Typography>
-          </Link>
-        </ListItem>
+          </ListItem>
+        </Link>
       ))}
     </List>
   );

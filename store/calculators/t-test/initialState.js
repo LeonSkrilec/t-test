@@ -18,10 +18,44 @@ export default {
   ],
   hypothetical_mean: null, // Decimal number
   hypothetical_proportion: null, // Decimal number
-  equal_variances: true,
-  paired_samples: false,
-  significance: 0.05,
-  two_tailed: true,
+  options: {
+    equal_variances: true,
+    paired_samples: false,
+    significance: 0.05,
+    two_tailed: true
+  },
+  steps: [
+    {
+      name: 'intro',
+      completed: true,
+      componentName: 'Intro',
+      active: false
+    },
+    {
+      name: 'subject',
+      completed: false,
+      componentName: 'Subject',
+      active: false
+    },
+    {
+      name: 'data',
+      completed: false,
+      componentName: 'Data',
+      active: false
+    },
+    {
+      name: 'options',
+      completed: false,
+      componentName: 'Data',
+      active: false
+    },
+    {
+      name: 'results',
+      completed: false,
+      componentName: 'Data',
+      active: false
+    }
+  ],
   results: {
     t_value: null
   }

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Router from 'next/router';
 import { connect } from 'react-redux';
 import {
   Grid,
@@ -14,10 +13,12 @@ import {
 import {
   setNumberOfSamples,
   setCalculationSubject,
-  setCalculatorError
+  setCalculatorError,
+  setStepCompleted
 } from '../../store/calculators/t-test/actionCreators';
 
 import PageControls from './components/PageControls';
+import { changeCalculatorStep } from '../../support/routing';
 
 class Subject extends Component {
   constructor(props) {
@@ -33,25 +34,19 @@ class Subject extends Component {
     else this.props.setCalculationSubject(value);
   };
   previousClickHandler = () => {
-    const previousPageName = 'intro';
-    Router.push(
-      `/calculators/[slug]/[page]`,
-      `/calculators/t-test/${previousPageName}`
-    );
+    changeCalculatorStep('t-test', 'intro');
   };
   nextClickHandler = () => {
     // Data validation.
+    // We check if REDUX data store is filled with required values.
     if (
       [1, 2].includes(this.props.number_of_samples) &&
       ['means', 'proportions'].includes(this.props.proportions_or_means)
     ) {
       // Data is valid. Proceed to next route
       this.props.setCalculatorError({ type: '', text: '' });
-      const nextPageName = 'data';
-      return Router.push(
-        `/calculators/[slug]/[page]`,
-        `/calculators/t-test/${nextPageName}`
-      );
+      this.props.setStepCompleted({ name: 'subject' });
+      return changeCalculatorStep('t-test', 'data');
     } else {
       // Set error in REDUX store
       this.props.setCalculatorError({
@@ -70,7 +65,7 @@ class Subject extends Component {
               <Grid item xs={6}>
                 <FormControl>
                   <FormLabel style={{ marginBottom: '15px' }}>
-                    En ali dva vzorca?
+                    Število vzorcev
                   </FormLabel>
                   <RadioGroup
                     aria-label="number-of-samples"
@@ -95,7 +90,7 @@ class Subject extends Component {
               <Grid item xs={6}>
                 <FormControl>
                   <FormLabel style={{ marginBottom: '15px' }}>
-                    Razlika povprečji ali deležev?
+                    Primerjava povprečji ali deležev?
                   </FormLabel>
                   <RadioGroup
                     aria-label="difference-of-proportions-or-means"
@@ -145,7 +140,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   setNumberOfSamples,
   setCalculationSubject,
-  setCalculatorError
+  setCalculatorError,
+  setStepCompleted
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Subject);

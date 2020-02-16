@@ -1,8 +1,8 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Router from 'next/router';
-import CalculatorPage from './Page';
+import Step from './Step';
 import CalculatorError from './components/CalculatorError';
 // Calculator is basically a multi-step form. You take input from user and make some calculation on submit.
 // Than you display results
@@ -13,30 +13,21 @@ TODO:
   - Determine which page should be loaded regarding to state data
 */
 
-class TtestIndex extends React.Component {
+class Root extends React.Component {
+  static propTypes = {
+    step: PropTypes.string
+  };
+
+  static defaultProps = {
+    step: 'intro'
+  };
+
   constructor(props) {
     super(props);
     // props.page holds page value. And it changes on routing
-    // But we should check if we have required data in redux store to be on that page.
-    // Because pages in calculator are inter-dependent. Some pages rely on others for data
-    // We can just save on which page we left of in tth
-
-    // Če v redux store-u ni potrebne vrednosti za render te strani, preusmeri na začetno stran.
-    this.state = {
-      pageChecked: false
-    };
   }
 
-  componentDidMount() {
-    if (this.props.page === 'data') {
-      if (
-        !this.props.calculatorState.number_of_samples ||
-        !this.props.calculatorState.proportions_or_means
-      )
-        Router.push(`/calculators/[...slug]`, `/calculators/t-test/subject`);
-    }
-    this.setState({ pageChecked: true });
-  }
+  componentDidMount() {}
 
   render() {
     return (
@@ -44,9 +35,8 @@ class TtestIndex extends React.Component {
         <Typography component="h2" variant="h2" gutterBottom align="center">
           Studentov t-test
         </Typography>
-        {this.state.pageChecked && (
-          <CalculatorPage page={this.props.page}></CalculatorPage>
-        )}
+
+        <Step step={this.props.step}></Step>
 
         <CalculatorError
           text={this.props.calculatorState.error.text}
@@ -63,4 +53,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(TtestIndex);
+export default connect(mapStateToProps)(Root);

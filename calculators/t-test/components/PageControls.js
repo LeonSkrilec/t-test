@@ -31,14 +31,14 @@ export default class pageControls extends Component {
         style={{ marginTop: '20px' }}
       >
         {this.props.previous && (
-          <Grid item xs={2}>
+          <Grid item>
             <Button onClick={this.props.previousClickHandler}>
               {this.props.previousText}
             </Button>
           </Grid>
         )}
 
-        <Grid item xs={2}>
+        <Grid item>
           {this.props.nextButtonType === 'submit' ? (
             <Button variant="contained" color="primary" type="submit">
               {this.props.nextText}

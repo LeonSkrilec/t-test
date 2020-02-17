@@ -1,5 +1,5 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
+import { Typography, Box } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Step from './Step';
@@ -32,9 +32,11 @@ class Root extends React.Component {
   render() {
     return (
       <>
-        <Typography component="h2" variant="h2" gutterBottom align="center">
-          Studentov t-test
-        </Typography>
+        <Box mb={3}>
+          <Typography component="h2" variant="h2" gutterBottom align="center">
+            Studentov t-test
+          </Typography>
+        </Box>
 
         <Step step={this.props.step}></Step>
 

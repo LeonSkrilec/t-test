@@ -2,9 +2,10 @@ import {
   SET_NUMBER_OF_SAMPLES,
   SET_PROPORTIONS_OR_MEANS,
   SET_CALCULATOR_ERROR,
-  SET_SAMPLE_DATA,
+  SET_CALCULATION_DATA,
   SET_OPTIONS,
-  SET_STEP_COMPLETED
+  SET_STEP_COMPLETED,
+  SET_RESULTS
 } from './actionTypes';
 
 const setNumberOfSamples = numberOfSamples => {
@@ -30,12 +31,10 @@ const setCalculatorError = errorObject => {
   };
 };
 
-const setSampleData = ({ sampleIndex, property, value }) => {
+const setCalculationData = data => {
   return {
-    type: SET_SAMPLE_DATA,
-    sampleIndex,
-    property,
-    value
+    type: SET_CALCULATION_DATA,
+    data
   };
 };
 
@@ -53,11 +52,19 @@ const setStepCompleted = step => {
   };
 };
 
+const setResults = results => {
+  return {
+    type: SET_RESULTS,
+    results
+  };
+};
+
 export {
   setNumberOfSamples,
   setCalculationSubject,
   setCalculatorError,
-  setSampleData,
+  setCalculationData,
   setOptions,
-  setStepCompleted
+  setStepCompleted,
+  setResults
 };

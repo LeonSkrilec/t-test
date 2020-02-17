@@ -2,6 +2,7 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import PageControls from './components/PageControls';
 import { changeCalculatorStep } from '../../support/routing';
+import { Container } from '@material-ui/core';
 class Intro extends React.Component {
   constructor(props) {
     super(props);
@@ -10,7 +11,7 @@ class Intro extends React.Component {
   nextClickHandler() {}
   render() {
     return (
-      <>
+      <Container maxWidth="md">
         <Typography
           component="p"
           variant="subtitle1"
@@ -26,7 +27,7 @@ class Intro extends React.Component {
           previous={false}
           nextClickHandler={() => changeCalculatorStep('t-test', 'subject')}
         ></PageControls>
-      </>
+      </Container>
     );
   }
 }

@@ -52,8 +52,8 @@ class Step extends Component {
       requestedStep: this.props.step
     });
 
-    console.log('requested step', this.props.step);
-    console.log('step to render', stepToRender);
+    // console.log('requested step', this.props.step);
+    // console.log('step to render', stepToRender);
 
     if (stepToRender.name !== this.props.step) {
       changeCalculatorStep('t-test', stepToRender.name);

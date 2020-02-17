@@ -2,12 +2,22 @@ import React from 'react';
 import { Container, Grid, FormLabel } from '@material-ui/core';
 import PageControls from './components/PageControls';
 import { connect } from 'react-redux';
-import { setSampleData } from '../../store/calculators/t-test/actionCreators';
+import {
+  setCalculationData,
+  setStepCompleted
+} from '../../store/calculators/t-test/actionCreators';
 
 import { getFields } from './helpers/dataFieldsList';
 import DataInput from './components/DataInput';
 import validator from './helpers/dataValidator';
 import { changeCalculatorStep } from '../../support/routing';
+
+/**
+ * This component renders input fields according to data in store.
+ * Different fieldsets are rendered if user is calculating proportions, means, one sample or two sample.
+ * Data is validated on submit. Field values are stored in local state.
+ * After data is validated it is synced with central redux store.
+ */
 
 class Data extends React.Component {
   // Data collection point.
@@ -53,14 +63,6 @@ class Data extends React.Component {
 
     let isDataValid = true;
     const validatedFields = this.state.fields.map(field => {
-      console.log(
-        'validating ',
-        field.name,
-        ' with value ',
-        field.value,
-        ' against rules ',
-        field.validation.rules
-      );
       const isFieldValid = this.validation.validate(field);
       // console.log('validation is: ', isFieldValid);
       if (!isFieldValid) {
@@ -80,6 +82,23 @@ class Data extends React.Component {
   onDataValid() {
     // TODO: 1. Update calculator data in store. 2. Route to next page
     console.log('data is valid! Lets go to next page ho.');
+    // Save local fields data to central redux store.
+
+    let data = {
+      samples: [{}, {}],
+      hypothetical_mean: null,
+      hypothetical_proportion: null
+    };
+    const sampleKeys = ['number_of_units', 'mean', 'variance', 'proportion'];
+    for (let i = 0; i < this.state.fields.length; i++) {
+      const field = this.state.fields[i];
+      if (sampleKeys.includes(field.name)) {
+        data.samples[field.column][field.name] = field.value;
+      } else {
+        data[field.name] = field.value;
+      }
+    }
+    this.props.setCalculationData(data);
     this.props.setStepCompleted({ name: 'data' });
     return changeCalculatorStep('t-test', 'options');
   }
@@ -92,6 +111,12 @@ class Data extends React.Component {
         {...field}
         onChange={this.handleChange}
       ></DataInput>
+    );
+  }
+
+  getField(name, column) {
+    return this.state.fields.find(
+      field => field.name === name && field.column == column
     );
   }
 
@@ -138,16 +163,15 @@ class Data extends React.Component {
 const mapStateToProps = state => {
   return {
     error: state.calculators['t-test'].error,
-    number_of_samples: state.calculators['t-test'].number_of_samples,
-    proportions_or_means: state.calculators['t-test'].proportions_or_means,
     samples: state.calculators['t-test'].samples,
-    hypothetical_mean: state.calculators['t-test'].hypothetical_mean,
-    hypothetical_proportion: state.calculators['t-test'].hypothetical_proportion
+    number_of_samples: state.calculators['t-test'].number_of_samples,
+    proportions_or_means: state.calculators['t-test'].proportions_or_means
   };
 };
 
 const mapDispatchToProps = {
-  setSampleData
+  setCalculationData,
+  setStepCompleted
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Data);

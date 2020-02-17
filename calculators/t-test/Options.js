@@ -11,9 +11,14 @@ import {
   Radio
 } from '@material-ui/core';
 
-import { setOptions } from '../../store/calculators/t-test/actionCreators';
+import {
+  setOptions,
+  setStepCompleted,
+  setResults
+} from '../../store/calculators/t-test/actionCreators';
 import PageControls from './components/PageControls';
 import { changeCalculatorStep } from '../../support/routing';
+import { calculate } from './helpers/calculation';
 
 class Options extends React.Component {
   constructor(props) {
@@ -21,101 +26,67 @@ class Options extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  componentDidMount() {}
+
   handleChange(event) {
-    const { value, name } = event.target;
-
-    console.log(value, name);
-
-    // this.props.setOptions({[radioName]: value});
+    let { value, name } = event.target;
+    const booleans = ['two_tailed', 'paired_samples', 'equal_variances'];
+    if (booleans.includes(name)) value = value == 'true'; // Convert "true" to boolean true or false
+    if (name === 'significance') value = parseFloat(value);
+    this.props.setOptions({ [name]: value });
   }
-  nextClickHandler() {
-    // 1. check
-    // 2. If data valid
-    console.log('do calculate ...');
+  nextClickHandler = () => {
+    // We do not need to validate data since we are providing default values
+    // If user does nothing and just proceeds we calculate using default values ...
+
+    this.makeCalculation().then(results => {
+      this.props.setResults(results);
+      this.props.setStepCompleted({ name: 'options' });
+      changeCalculatorStep('t-test', 'results');
+    });
+  };
+
+  makeCalculation() {
+    return calculate({
+      number_of_samples: this.props.number_of_samples,
+      proportions_or_means: this.props.proportions_or_means,
+      data: this.props.data,
+      options: this.props.options
+    });
   }
+
   render() {
     return (
-      <Container>
+      <Container maxWidth="sm">
         <form noValidate autoComplete="off">
           <Grid container spacing={4}>
-            <Grid item sm={6}>
-              <FormControl>
-                <FormLabel style={{ marginBottom: '15px' }}>
-                  Sta varianci enaki?
-                </FormLabel>
-                <RadioGroup
-                  aria-label="equality-of-variances"
-                  name="equal_variances"
-                  onChange={e => this.handleChange(e, 'equal_variances')}
-                >
-                  <FormControlLabel
-                    value="true"
-                    control={<Radio />}
-                    label="Varianci sta enaki"
-                  />
-                  <FormControlLabel
-                    value="false"
-                    control={<Radio />}
-                    label="Varianci nista enaki"
-                  />
-                </RadioGroup>
-              </FormControl>
-            </Grid>
-            <Grid item sm={6}>
-              <FormControl>
-                <FormLabel style={{ marginBottom: '15px' }}>
-                  V kakšnem razmerju so vzorčne enote?
-                </FormLabel>
-                <RadioGroup
-                  aria-label="paired-samples"
-                  name="paired_samples"
-                  onChange={e => this.handleChange(e, 'paired_samples')}
-                >
-                  <FormControlLabel
-                    value="false"
-                    control={<Radio />}
-                    label="Neodvisna vzorca"
-                  />
-                  <FormControlLabel
-                    value="true"
-                    control={<Radio />}
-                    label="Odvisna vzorca"
-                  />
-                </RadioGroup>
-              </FormControl>
-            </Grid>
-            <Grid item sm={6}>
-              <FormControl>
-                <FormLabel
-                  style={{
-                    marginBottom: '15px'
-                  }}
-                >
-                  Izberi signifikanco
-                </FormLabel>
-                <RadioGroup
-                  aria-label="significance"
-                  name="significance"
-                  onChange={e => this.handleChange(e, 'significance')}
-                >
-                  <FormControlLabel
-                    value="0.05"
-                    control={<Radio />}
-                    label="0,05"
-                  />
-                  <FormControlLabel
-                    value="0.01"
-                    control={<Radio />}
-                    label="0,01"
-                  />
-                  <FormControlLabel
-                    value="0.001"
-                    control={<Radio />}
-                    label="0,001"
-                  />
-                </RadioGroup>
-              </FormControl>
-            </Grid>
+            {this.props.number_of_samples === 2 && (
+              <Grid item sm={6}>
+                <FormControl>
+                  <FormLabel style={{ marginBottom: '15px' }}>
+                    Sta populacijski varianci enaki?
+                  </FormLabel>
+                  <RadioGroup
+                    aria-label="equality-of-variances"
+                    name="equal_variances"
+                    onChange={e => this.handleChange(e, 'equal_variances')}
+                    value={this.props.options.equal_variances}
+                  >
+                    <FormControlLabel
+                      value={true}
+                      control={<Radio />}
+                      label="Varianci sta enaki"
+                    />
+                    <FormControlLabel
+                      value={false}
+                      control={<Radio />}
+                      label="Varianci nista enaki (Welch t-test)"
+                    />
+                  </RadioGroup>
+                </FormControl>
+              </Grid>
+            )}
+
             <Grid item sm={6}>
               <FormControl>
                 <FormLabel style={{ marginBottom: '15px' }}>
@@ -125,14 +96,15 @@ class Options extends React.Component {
                   aria-label="two-tailed"
                   name="two_tailed"
                   onChange={e => this.handleChange(e, 'two_tailed')}
+                  value={this.props.options.two_tailed}
                 >
                   <FormControlLabel
-                    value="true"
+                    value={true}
                     control={<Radio />}
                     label="Dvostranski"
                   />
                   <FormControlLabel
-                    value="false"
+                    value={false}
                     control={<Radio />}
                     label="Enostranski"
                   />
@@ -154,12 +126,17 @@ class Options extends React.Component {
 
 const mapStateToProps = state => {
   return {
+    number_of_samples: state.calculators['t-test'].number_of_samples,
+    proportions_or_means: state.calculators['t-test'].proportions_or_means,
+    data: state.calculators['t-test'].data,
     options: state.calculators['t-test'].options
   };
 };
 
 const mapDispatchToProps = {
-  setOptions
+  setOptions,
+  setStepCompleted,
+  setResults
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Options);

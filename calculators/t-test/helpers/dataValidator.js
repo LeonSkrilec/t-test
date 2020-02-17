@@ -6,7 +6,14 @@ class Validator {
   }
 
   validate(field) {
-    // Determine what we have to validate.
+    console.log(
+      'validating ',
+      field.name,
+      ' with value ',
+      field.value,
+      ' against rules ',
+      field.validation.rules
+    );
     const valid = this.validator.check(field.value, field.validation.rules);
     return valid;
   }

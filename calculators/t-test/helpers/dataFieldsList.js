@@ -35,11 +35,11 @@ const fields = {
     // Positive Decimal number
     value: '',
     type: 'number',
-    label: 'Elementarna varianca',
+    label: 'Varianca',
     name: 'variance',
     id: 'variance',
     validation: {
-      rules: 'required|numeric|min:0,num',
+      rules: 'required|numeric|min:0.0000001,num',
       errorMessage: 'Vnesite pozitivno število.'
     }
   },

@@ -3,15 +3,19 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Link from 'next/link';
 import Typography from '@material-ui/core/Typography';
+import calculators from '../calculators/settings';
 
-import items from './items';
 export default function SideNav() {
   return (
     <List>
-      {items.map(item => (
-        <Link href="/calculators/[slug]" as={item.url} key={item.url}>
+      {calculators.list.map(calculator => (
+        <Link
+          href={`${calculators.baseFolder}/[slug]`}
+          as={`${calculators.baseFolder}/${calculator.slug}`}
+          key={calculator.slug}
+        >
           <ListItem button>
-            <Typography component="a">{item.label}</Typography>
+            <Typography component="a">{calculator.title}</Typography>
           </ListItem>
         </Link>
       ))}

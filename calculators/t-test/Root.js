@@ -7,12 +7,6 @@ import CalculatorError from './components/CalculatorError';
 // Calculator is basically a multi-step form. You take input from user and make some calculation on submit.
 // Than you display results
 
-/*
-TODO: 
-  - Extract Next.js routing functionality and provide it to all calculators. Expose methods for routing to certain pages inside calculator.
-  - Determine which page should be loaded regarding to state data
-*/
-
 class Root extends React.Component {
   static propTypes = {
     step: PropTypes.string

@@ -22,31 +22,26 @@ export default {
     {
       name: 'intro',
       completed: true,
-      componentName: 'Intro',
       active: false
     },
     {
       name: 'subject',
       completed: false,
-      componentName: 'Subject',
       active: false
     },
     {
       name: 'data',
       completed: false,
-      componentName: 'Data',
       active: false
     },
     {
       name: 'options',
       completed: false,
-      componentName: 'Data',
       active: false
     },
     {
       name: 'results',
       completed: false,
-      componentName: 'Data',
       active: false
     }
   ],

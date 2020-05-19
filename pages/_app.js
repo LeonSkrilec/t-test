@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import withReduxStore from '../store/withReduxStore';
 import ThemeProvider from '../theme/Provider';
 import Master from '../layouts/Master';
-import DrawerLayout from '../layouts/DrawerLayout';
 
 class App extends NextApp {
   // remove it here
@@ -21,11 +20,9 @@ class App extends NextApp {
     return (
       <Master>
         <ThemeProvider>
-          <DrawerLayout>
-            <Provider store={reduxStore}>
-              <Component {...pageProps} />
-            </Provider>
-          </DrawerLayout>
+          <Provider store={reduxStore}>
+            <Component {...pageProps} />
+          </Provider>
         </ThemeProvider>
       </Master>
     );

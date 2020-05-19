@@ -3,13 +3,12 @@ import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {
   Drawer,
-  CssBaseline,
   AppBar,
   Toolbar,
   Divider,
-  IconButton,
-  Link as MaterialLink
+  IconButton
 } from '@material-ui/core';
+import LogoHorizontal from '../assets/images/logos/logo-horizontal.svg';
 
 import {
   Menu as MenuIcon,
@@ -19,12 +18,14 @@ import {
 
 import Link from 'next/link';
 import SideNav from '../components/SideNav';
+
 const drawerWidth = 240;
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex'
   },
   appBar: {
+    backgroundColor: 'white',
     transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
@@ -58,6 +59,13 @@ const useStyles = makeStyles(theme => ({
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end'
   },
+  logo: {
+    flexGrow: 1,
+    height: '40px',
+    '& img': {
+      height: '100%'
+    }
+  },
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
@@ -76,7 +84,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function PersistentDrawerLeft(props) {
+export default function AppLayout(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
@@ -91,7 +99,6 @@ export default function PersistentDrawerLeft(props) {
 
   return (
     <div className={classes.root}>
-      <CssBaseline />
       <AppBar
         position="fixed"
         className={clsx(classes.appBar, {
@@ -108,11 +115,11 @@ export default function PersistentDrawerLeft(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Link href="/" passHref>
-            <MaterialLink variant="h6" color="secondary">
-              T-test.si
-            </MaterialLink>
-          </Link>
+          <div className={classes.logo}>
+            <Link href="/">
+              <img src={LogoHorizontal} alt="t-test" />
+            </Link>
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer

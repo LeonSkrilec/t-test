@@ -1,4 +1,4 @@
-const calculators = {
+export default {
   // THIS DATA IS CURRENTLY NOT USED ANYWHERE
   baseFolder: '/calculators',
   list: [
@@ -10,7 +10,8 @@ const calculators = {
       description:
         'Preverite ali se vzorčna in hipotetična vrednost statistično značilno razlikujeta.',
       author: {
-        image: '/assets/images/leon.jpeg'
+        image: require(`../assets/images/authors/leon.jpeg`),
+        name: 'Leon Škrilec'
       }
     },
     {
@@ -19,17 +20,11 @@ const calculators = {
       title: 'Kalkulator opisnih statistik',
       category: 'Opisne statistike',
       description:
-        'Hitro izračunajte povprečje, modus, mediano, kvartile, minumum in maximum.'
+        'Hitro izračunajte povprečje, modus, mediano, kvartile, minumum in maximum.',
+      author: {
+        image: require(`../assets/images/authors/leon.jpeg`),
+        name: 'Leon Škrilec'
+      }
     }
   ]
 };
-
-export default function calulators(state = calculators, action) {
-  // Currently we will not have any actions here
-  // We are just setting initial state to calculator list
-  // Maybe we can have GetCalculators
-  switch (action.type) {
-    default:
-      return state;
-  }
-}

@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
-import Head from '../components/Head';
+import Meta from '../components/Meta';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 export default function Master(props) {
   return (
     <>
-      <Head></Head>
+      <CssBaseline />
+      <Meta></Meta>
       <div className="app">{props.children}</div>
     </>
   );

@@ -7,6 +7,7 @@ import { Grid, Button } from '@material-ui/core';
 export default class pageControls extends Component {
   static propTypes = {
     nextText: PropTypes.string,
+    nextIcon: PropTypes.node,
     previousText: PropTypes.string,
     nextClickHandler: PropTypes.func,
     previousClickHandler: PropTypes.func,
@@ -48,6 +49,7 @@ export default class pageControls extends Component {
               variant="contained"
               color="primary"
               onClick={this.props.nextClickHandler}
+              endIcon={this.props.nextIcon}
             >
               {this.props.nextText}
             </Button>

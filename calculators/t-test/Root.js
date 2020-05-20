@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Box } from '@material-ui/core';
+import { Typography, Box, Container } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Step from './Step';
@@ -26,18 +26,22 @@ class Root extends React.Component {
   render() {
     return (
       <>
-        <Box mb={3}>
-          <Typography component="h2" variant="h2" gutterBottom align="center">
-            Studentov t-test
-          </Typography>
-        </Box>
+        <Container fixed>
+          <Box mb={3}>
+            <Typography component="h2" variant="h2" gutterBottom align="left">
+              Studentov t-test
+            </Typography>
+          </Box>
+        </Container>
 
         <Step step={this.props.step}></Step>
 
-        <CalculatorError
-          text={this.props.calculatorState.error.text}
-          type={this.props.calculatorState.error.type}
-        ></CalculatorError>
+        <Container fixed>
+          <CalculatorError
+            text={this.props.calculatorState.error.text}
+            type={this.props.calculatorState.error.type}
+          ></CalculatorError>
+        </Container>
       </>
     );
   }

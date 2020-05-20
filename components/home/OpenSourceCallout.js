@@ -4,8 +4,8 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 
 export default function OpenSourceCallout() {
   return (
-    <Container disableGutters>
-      <Box p={4} color="white" bgcolor="primary.main" textAlign="center">
+    <Box p={4} color="white" bgcolor="primary.main" textAlign="center">
+      <Container disableGutters>
         <Box maxWidth="550px" margin="0 auto">
           <Typography variant="h3">
             Si razvijalec in te zanima statistika?
@@ -42,7 +42,7 @@ export default function OpenSourceCallout() {
             </Button>
           </Box>
         </Box>
-      </Box>
-    </Container>
+      </Container>
+    </Box>
   );
 }

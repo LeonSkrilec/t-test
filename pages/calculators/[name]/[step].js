@@ -3,7 +3,7 @@ import CalculatorRoot from '../../../calculators/Root';
 
 export default function Base() {
   const router = useRouter();
-  const { name } = router.query;
+  const { name, step } = router.query;
 
-  return <CalculatorRoot name={name}></CalculatorRoot>;
+  return <CalculatorRoot name={name} step={step}></CalculatorRoot>;
 }

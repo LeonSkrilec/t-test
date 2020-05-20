@@ -116,7 +116,7 @@ export default function AppLayout(props) {
             <MenuIcon />
           </IconButton>
           <div className={classes.logo}>
-            <Link href="/">
+            <Link href="/calculators">
               <img src={LogoHorizontal} alt="t-test" />
             </Link>
           </div>

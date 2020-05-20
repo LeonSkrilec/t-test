@@ -4,13 +4,15 @@ import PageControls from './components/PageControls';
 import { connect } from 'react-redux';
 import {
   setCalculationData,
-  setStepCompleted
+  setStepCompleted,
+  setResults
 } from '../../store/calculators/t-test/actionCreators';
 
 import { getFields } from './helpers/dataFieldsList';
 import DataInput from './components/DataInput';
 import validator from './helpers/dataValidator';
 import { changeCalculatorStep } from '../../support/routing';
+import { calculate } from './helpers/calculation';
 
 /**
  * This component renders input fields according to data in store.
@@ -100,7 +102,21 @@ class Data extends React.Component {
     }
     this.props.setCalculationData(data);
     this.props.setStepCompleted({ name: 'data' });
-    return changeCalculatorStep('t-test', 'options');
+
+    this.makeCalculation(data).then(results => {
+      this.props.setResults(results);
+      this.props.setStepCompleted({ name: 'options' });
+      changeCalculatorStep('t-test', 'results');
+    });
+  }
+
+  makeCalculation(data) {
+    return calculate({
+      number_of_samples: this.props.number_of_samples,
+      proportions_or_means: this.props.proportions_or_means,
+      options: this.props.options,
+      data: data
+    });
   }
 
   renderField(field) {
@@ -165,13 +181,16 @@ const mapStateToProps = state => {
     error: state.calculators['t-test'].error,
     samples: state.calculators['t-test'].samples,
     number_of_samples: state.calculators['t-test'].number_of_samples,
-    proportions_or_means: state.calculators['t-test'].proportions_or_means
+    proportions_or_means: state.calculators['t-test'].proportions_or_means,
+    data: state.calculators['t-test'].data,
+    options: state.calculators['t-test'].options
   };
 };
 
 const mapDispatchToProps = {
   setCalculationData,
-  setStepCompleted
+  setStepCompleted,
+  setResults
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Data);

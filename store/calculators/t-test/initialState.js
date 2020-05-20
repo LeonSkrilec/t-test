@@ -16,31 +16,31 @@ export default {
   },
   options: {
     equal_variances: true,
-    two_tailed: true
+    two_tailed: true,
+    significance: 0.05
   },
   steps: [
     {
       name: 'intro',
+      subtitle: 'Teoretska izhodišča',
       completed: true,
       active: false
     },
     {
       name: 'subject',
+      subtitle: 'Začetne nastavitve',
       completed: false,
       active: false
     },
     {
       name: 'data',
-      completed: false,
-      active: false
-    },
-    {
-      name: 'options',
+      subtitle: 'Vhodni podatki',
       completed: false,
       active: false
     },
     {
       name: 'results',
+      subtitle: 'Rezultati in interpretacija',
       completed: false,
       active: false
     }

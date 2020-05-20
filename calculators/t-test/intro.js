@@ -15,59 +15,47 @@ class Intro extends React.Component {
 
   render() {
     return (
-      <Container fixed>
-        <Grid container spacing={2}>
-          <Grid item sm={6}>
-            <Card>
-              <CardContent>
-                <Theory></Theory>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item sm={4}>
-            <Card>
-              <CardContent>
-                <Typography variant="h5">Predpostavke</Typography>
-                <Typography variant="body1" paragraph>
-                  <ul>
-                    <li>
-                      <strong>Enostavni slučajni vzorec</strong>
-                      <br></br>
-                      Enote so bile izbrane v vzorec s postopkom enostavnega
-                      slučajnega vzorca. Vsaka enota ima enako verjetnost izbora
-                      v vzorec.
-                    </li>
-                    <li>
-                      <strong>Neodvisnost enot</strong>
-                      <br></br>
-                      Enote v vzorcu so neodvisne med seboj. To zagotovimo z
-                      vzročenjem z zamenjavo ali pa z velikostjo vzorca manjšo
-                      od 10% velikosti populacije.
-                    </li>
-                    <li>
-                      <strong>Normalna porazdelitev</strong>
-                      <br></br>Preverimo ali je porazdelitev spremenljivke na
-                      populaciji približno normalna, ali pa zagotovimo dovolj
-                      velik vzorec (N > 30).
-                    </li>
-                  </ul>
-                </Typography>
-
-                <Box mt={3}>
-                  <PageControls
-                    nextText="Začni izračun"
-                    previous={false}
-                    nextIcon={<ChevronRightIcon></ChevronRightIcon>}
-                    nextClickHandler={() =>
-                      changeCalculatorStep('t-test', 'subject')
-                    }
-                  ></PageControls>
-                </Box>
-              </CardContent>
-            </Card>
-          </Grid>
+      <Grid container spacing={6}>
+        <Grid item sm={6}>
+          <Theory></Theory>
         </Grid>
-      </Container>
+        <Grid item sm={4}>
+          <Typography variant="h5">Predpostavke</Typography>
+          <Typography variant="body1" paragraph component="div">
+            <ul>
+              <li>
+                <strong>Enostavni slučajni vzorec</strong>
+                <br></br>
+                Enote so bile izbrane v vzorec s postopkom enostavnega
+                slučajnega vzorca. Vsaka enota ima enako verjetnost izbora v
+                vzorec.
+              </li>
+              <li>
+                <strong>Neodvisnost enot</strong>
+                <br></br>
+                Enote v vzorcu so neodvisne med seboj. To zagotovimo z
+                vzročenjem z zamenjavo ali pa z velikostjo vzorca manjšo od 10%
+                velikosti populacije.
+              </li>
+              <li>
+                <strong>Normalna porazdelitev</strong>
+                <br></br>Preverimo ali je porazdelitev spremenljivke na
+                populaciji približno normalna, ali pa zagotovimo dovolj velik
+                vzorec (N > 30).
+              </li>
+            </ul>
+          </Typography>
+
+          <Box mt={3}>
+            <PageControls
+              nextText="Začni izračun"
+              previous={false}
+              nextIcon={<ChevronRightIcon></ChevronRightIcon>}
+              nextClickHandler={() => changeCalculatorStep('t-test', 'subject')}
+            ></PageControls>
+          </Box>
+        </Grid>
+      </Grid>
     );
   }
 }

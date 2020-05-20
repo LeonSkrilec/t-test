@@ -13,6 +13,7 @@ import {
 import {
   setNumberOfSamples,
   setCalculationSubject,
+  setOptions,
   setCalculatorError,
   setStepCompleted
 } from '../../store/calculators/t-test/actionCreators';
@@ -31,7 +32,10 @@ class Subject extends Component {
     // On value change we dispatch an action to REDUX store which will trigger a reducer and update value in the application state
     if (name === 'number_of_samples')
       this.props.setNumberOfSamples(parseInt(value));
-    else this.props.setCalculationSubject(value);
+    else if (name === 'proportions_or_means')
+      this.props.setCalculationSubject(value);
+    else if (name === 'equal_variances')
+      this.props.setOptions({ equal_variances: value == 'true' });
   };
   previousClickHandler = () => {
     changeCalculatorStep('t-test', 'intro');
@@ -59,71 +63,98 @@ class Subject extends Component {
   render() {
     return (
       <Container maxWidth="sm">
-        <Box mt={6} mb={3}>
-          <form noValidate autoComplete="off">
-            <Grid container spacing={3}>
-              <Grid item xs={6}>
-                <FormControl>
-                  <FormLabel style={{ marginBottom: '15px' }}>
-                    Število vzorcev
-                  </FormLabel>
-                  <RadioGroup
-                    aria-label="number-of-samples"
-                    name="number_of_samples"
-                    onChange={e => this.handleChange(e, 'number_of_samples')}
-                  >
-                    <FormControlLabel
-                      value="1"
-                      control={<Radio />}
-                      label="En vzorec"
-                      checked={this.props.number_of_samples === 1}
-                    />
-                    <FormControlLabel
-                      value="2"
-                      control={<Radio />}
-                      label="Dva vzorca"
-                      checked={this.props.number_of_samples === 2}
-                    />
-                  </RadioGroup>
-                </FormControl>
-              </Grid>
-              <Grid item xs={6}>
-                <FormControl>
-                  <FormLabel style={{ marginBottom: '15px' }}>
-                    Primerjava povprečji ali deležev?
-                  </FormLabel>
-                  <RadioGroup
-                    aria-label="difference-of-proportions-or-means"
-                    name="difference_between"
-                    onChange={this.handleChange}
-                  >
-                    <FormControlLabel
-                      value="means"
-                      control={<Radio />}
-                      label="Razlika povprečji"
-                      checked={this.props.proportions_or_means === 'means'}
-                    />
-                    <FormControlLabel
-                      value="proportions"
-                      control={<Radio />}
-                      label="Razlika deležev"
-                      checked={
-                        this.props.proportions_or_means === 'proportions'
-                      }
-                    />
-                  </RadioGroup>
-                </FormControl>
-              </Grid>
+        <form noValidate autoComplete="off">
+          <Grid container spacing={3}>
+            <Grid item xs={6}>
+              <FormControl>
+                <FormLabel style={{ marginBottom: '15px' }}>
+                  Število vzorcev
+                </FormLabel>
+                <RadioGroup
+                  aria-label="number-of-samples"
+                  name="number_of_samples"
+                  onChange={e => this.handleChange(e)}
+                >
+                  <FormControlLabel
+                    value="1"
+                    control={<Radio />}
+                    label="En vzorec"
+                    checked={this.props.number_of_samples === 1}
+                  />
+                  <FormControlLabel
+                    value="2"
+                    control={<Radio />}
+                    label="Dva vzorca"
+                    checked={this.props.number_of_samples === 2}
+                  />
+                </RadioGroup>
+              </FormControl>
             </Grid>
+            <Grid item xs={6}>
+              <FormControl>
+                <FormLabel style={{ marginBottom: '15px' }}>
+                  Primerjava povprečji ali deležev?
+                </FormLabel>
+                <RadioGroup
+                  aria-label="difference-of-proportions-or-means"
+                  name="proportions_or_means"
+                  onChange={e => this.handleChange(e)}
+                >
+                  <FormControlLabel
+                    value="means"
+                    control={<Radio />}
+                    label="Razlika povprečji"
+                    checked={this.props.proportions_or_means === 'means'}
+                  />
+                  <FormControlLabel
+                    value="proportions"
+                    control={<Radio />}
+                    label="Razlika deležev"
+                    checked={this.props.proportions_or_means === 'proportions'}
+                  />
+                </RadioGroup>
+              </FormControl>
+            </Grid>
+          </Grid>
 
-            <PageControls
-              nextText="naprej"
-              previousPage="nazaj"
-              nextClickHandler={this.nextClickHandler}
-              previousClickHandler={this.previousClickHandler}
-            ></PageControls>
-          </form>
-        </Box>
+          {this.props.number_of_samples === 2 && (
+            <Box mt={3}>
+              <Grid container spacing={3}>
+                <Grid item xs={6}>
+                  <FormControl>
+                    <FormLabel style={{ marginBottom: '15px' }}>
+                      Sta populacijski varianci enaki?
+                    </FormLabel>
+                    <RadioGroup
+                      aria-label="equality-of-variances"
+                      name="equal_variances"
+                      onChange={e => this.handleChange(e)}
+                      value={this.props.options.equal_variances}
+                    >
+                      <FormControlLabel
+                        value={true}
+                        control={<Radio />}
+                        label="Varianci sta enaki"
+                      />
+                      <FormControlLabel
+                        value={false}
+                        control={<Radio />}
+                        label="Varianci nista enaki (Welch t-test)"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                </Grid>
+              </Grid>
+            </Box>
+          )}
+
+          <PageControls
+            nextText="naprej"
+            previousPage="nazaj"
+            nextClickHandler={this.nextClickHandler}
+            previousClickHandler={this.previousClickHandler}
+          ></PageControls>
+        </form>
       </Container>
     );
   }
@@ -133,13 +164,15 @@ const mapStateToProps = state => {
   return {
     number_of_samples: state.calculators['t-test'].number_of_samples,
     proportions_or_means: state.calculators['t-test'].proportions_or_means,
-    error: state.calculators['t-test'].error
+    error: state.calculators['t-test'].error,
+    options: state.calculators['t-test'].options
   };
 };
 
 const mapDispatchToProps = {
   setNumberOfSamples,
   setCalculationSubject,
+  setOptions,
   setCalculatorError,
   setStepCompleted
 };

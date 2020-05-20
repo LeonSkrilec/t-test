@@ -1,51 +1,97 @@
 import React from 'react';
-import { Typography, Box, Container } from '@material-ui/core';
+import {
+  Typography,
+  Box,
+  Container,
+  Card,
+  CardContent,
+  Button
+} from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
 import Step from './Step';
 import CalculatorError from './components/CalculatorError';
+import Link from 'next/link';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 // Calculator is basically a multi-step form. You take input from user and make some calculation on submit.
 // Than you display results
 
-class Root extends React.Component {
-  static propTypes = {
-    step: PropTypes.string
-  };
-
-  static defaultProps = {
-    step: 'intro'
-  };
-
-  constructor(props) {
-    super(props);
-    // props.page holds page value. And it changes on routing
+const useStyles = makeStyles(theme => ({
+  calculatorTitle: {
+    marginBottom: '0px'
   }
+}));
 
-  componentDidMount() {}
+function RootFunctional(props) {
+  const classes = useStyles();
+  return (
+    <>
+      <Container fixed>
+        <Card>
+          <CardContent>
+            <Box px={2}>
+              {props.step === 'intro' ? (
+                <Link href="/calculators">
+                  <Button
+                    variant="text"
+                    color="primary"
+                    startIcon={<ChevronLeftIcon></ChevronLeftIcon>}
+                  >
+                    Nazaj na seznam
+                  </Button>
+                </Link>
+              ) : (
+                <Link href="/calculators/t-test/intro">
+                  <Button
+                    variant="text"
+                    color="primary"
+                    startIcon={<ChevronLeftIcon></ChevronLeftIcon>}
+                  >
+                    Na začetek
+                  </Button>
+                </Link>
+              )}
+              <Typography
+                variant="h3"
+                align="left"
+                className={classes.calculatorTitle}
+              >
+                Studentov t-test kalkulator
+              </Typography>
+              <Typography variant="overline">
+                {
+                  props.calculatorState.steps.find(
+                    step => step.name === props.step
+                  ).subtitle
+                }
+              </Typography>
 
-  render() {
-    return (
-      <>
-        <Container fixed>
-          <Box mb={3}>
-            <Typography component="h2" variant="h2" gutterBottom align="left">
-              Studentov t-test
-            </Typography>
-          </Box>
-        </Container>
+              <Box p={2}>
+                <Step step={props.step}></Step>
+              </Box>
+            </Box>
+          </CardContent>
+        </Card>
+      </Container>
 
-        <Step step={this.props.step}></Step>
-
-        <Container fixed>
-          <CalculatorError
-            text={this.props.calculatorState.error.text}
-            type={this.props.calculatorState.error.type}
-          ></CalculatorError>
-        </Container>
-      </>
-    );
-  }
+      <Container fixed>
+        <CalculatorError
+          text={props.calculatorState.error.text}
+          type={props.calculatorState.error.type}
+        ></CalculatorError>
+      </Container>
+    </>
+  );
 }
+
+RootFunctional.propTypes = {
+  step: PropTypes.string
+};
+
+RootFunctional.defaultProps = {
+  step: 'intro'
+};
 
 const mapStateToProps = state => {
   return {
@@ -53,4 +99,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Root);
+export default connect(mapStateToProps)(RootFunctional);

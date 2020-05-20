@@ -6,7 +6,9 @@ export default function Theory() {
 
   return (
     <>
-      <Typography variant="h5">Kaj je t-test?</Typography>
+      <Typography variant="h5" gutterBottom>
+        Kaj je t-test?
+      </Typography>
       <Typography variant="body1" paragraph>
         T-test spada v družino inferenčne statistike t.j. veja statistike, ki se
         ukvarja s <strong>sklepanjem iz vzorca na populacijo</strong>. S
@@ -17,7 +19,9 @@ export default function Theory() {
         dvema vzorcema ali pa med enim vzorcem in hipotetično (populacijsko)
         vrednostjo.
       </Typography>
-      <Typography variant="h5">Zakaj t-test?</Typography>
+      <Typography variant="h5" gutterBottom>
+        Zakaj t-test?
+      </Typography>
       <Typography variant="body1" paragraph>
         V raziskovalnem procesu največkrat ne moremo preverjati hipotez na
         množici vseh raziskovalnih subjektov vendar v ta namen vzamemo iz
@@ -89,7 +93,7 @@ export default function Theory() {
             T-test nam vrne statistiko T, ki pa sama po sebi še ni tako pomembna
             za interpretacijo. Načeloma pa velja:
           </Typography>
-          <Typography variant="body1" paragraph>
+          <Typography variant="body1" paragraph component="div">
             <ul>
               <li>Večja t-vrednost pomeni bolj značilne razlike</li>
               <li>Manjša t-vrednost pomeni manj značilne razlike</li>

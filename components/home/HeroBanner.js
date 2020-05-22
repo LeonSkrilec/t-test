@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
     height: '180px'
   },
   headline: {
-    maxWidth: '450px',
+    maxWidth: '500px',
     textAlign: 'center',
     margin: `${theme.spacing(2)}px 0`
   }
@@ -36,25 +36,14 @@ export default function HeroBanner() {
   return (
     <div className={classes.root}>
       <div className={classes.logo}>
-        <img
-          className={classes.logoImage}
-          src={VerticalWhiteLogo}
-          alt="T-test logo"
-        />
+        <img className={classes.logoImage} src={VerticalWhiteLogo} alt="T-test logo" />
       </div>
       <div className={classes.headline}>
-        <Typography variant="h1">
-          Odprtokodna aplikacija za online statistične izračune
-        </Typography>
+        <Typography variant="h1">Odprtokodna aplikacija za online statistične izračune</Typography>
       </div>
       <div className="start">
         <Link href="/calculators">
-          <Button
-            component="a"
-            variant="contained"
-            size="large"
-            endIcon={<LaunchIcon />}
-          >
+          <Button component="a" variant="contained" size="large" endIcon={<LaunchIcon />}>
             Začni
           </Button>
         </Link>

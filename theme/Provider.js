@@ -1,47 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { ThemeProvider } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
-import RalewayRegularTTF from '../assets/fonts/Raleway/Raleway-Regular.ttf';
-import RalewayBoldTTF from '../assets/fonts/Raleway/Raleway-Bold.ttf';
-import RalewayLightTTF from '../assets/fonts/Raleway/Raleway-Light.ttf';
-
-const RalewayRegular = {
-  fontFamily: 'Raleway',
-  fontStyle: 'normal',
-  fontDisplay: 'swap',
-  fontWeight: 400,
-  src: `
-    local('Raleway'),
-    local('Raleway-Regular'),
-    url(${RalewayRegularTTF}) format('ttf')
-  `
-};
-
-const RalewayBold = {
-  fontFamily: 'Raleway',
-  fontStyle: 'normal',
-  fontDisplay: 'swap',
-  fontWeight: 700,
-  src: `
-    local('Raleway'),
-    local('Raleway-Regular'),
-    url(${RalewayBoldTTF}) format('ttf')
-  `
-};
-
-const RalewayLight = {
-  fontFamily: 'Raleway',
-  fontStyle: 'normal',
-  fontDisplay: 'swap',
-  fontWeight: 300,
-  src: `
-    local('Raleway'),
-    local('Raleway-Light'),
-    url(${RalewayLightTTF}) format('ttf')
-  `
-};
 
 const theme = props => {
   const theme = createMuiTheme({
@@ -63,7 +23,8 @@ const theme = props => {
     },
     typography: {
       h1: {
-        fontFamily: RalewayRegular,
+        fontFamily: 'Raleway',
+        fontWeight: 400,
         fontSize: '1.5rem',
         color: 'white',
         '@media (min-width:600px)': {
@@ -71,7 +32,8 @@ const theme = props => {
         }
       },
       h2: {
-        fontFamily: RalewayLight,
+        fontFamily: 'Raleway',
+        fontWeight: 300,
         fontSize: '2rem',
         '@media (min-width:800px)': {
           fontSize: '3rem'
@@ -80,7 +42,8 @@ const theme = props => {
         lineHeight: 1.2
       },
       h3: {
-        fontFamily: RalewayBold,
+        fontFamily: 'Raleway',
+        fontWeight: 700,
         fontSize: '1.5rem',
         '@media (min-width:800px)': {
           fontSize: '2.5rem'

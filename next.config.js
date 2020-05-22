@@ -9,18 +9,6 @@ module.exports = withImages({
       use: ['@svgr/webpack', 'url-loader']
     });
 
-    config.module.rules.push({
-      test: /\.ttf$/,
-      use: [
-        {
-          loader: 'ttf-loader',
-          options: {
-            name: './font/[hash].[ext]'
-          }
-        }
-      ]
-    });
-
     return config;
   }
 });

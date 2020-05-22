@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { changeCalculatorStep } from '../../support/routing';
 import Intro from './Intro';
 import Subject from './Subject';
-import Data from './Data';
+import InputData from './InputData';
 import Results from './Results';
 
 class Step extends Component {
@@ -77,7 +77,7 @@ class Step extends Component {
       case 'subject':
         return <Subject></Subject>;
       case 'data':
-        return <Data></Data>;
+        return <InputData></InputData>;
       case 'results':
         return <Results></Results>;
       default:

@@ -17,7 +17,7 @@ import { calculate } from './helpers/calculation';
  * After data is validated it is synced with central redux store.
  */
 
-class Data extends React.Component {
+class InputData extends React.Component {
   // Data collection point.
   constructor(props) {
     super(props);
@@ -171,4 +171,4 @@ const mapDispatchToProps = {
   setResults
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Data);
+export default connect(mapStateToProps, mapDispatchToProps)(InputData);

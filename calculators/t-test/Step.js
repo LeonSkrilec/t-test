@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import dynamic from 'next/dynamic';
 import { connect } from 'react-redux';
 import { changeCalculatorStep } from '../../support/routing';
-
-const Intro = dynamic(() => import('./Intro'));
-const Options = dynamic(() => import('./Options'));
-const Results = dynamic(() => import('./Results'));
-const Subject = dynamic(() => import('./Subject'));
-const Data = dynamic(() => import('./Data'));
+import Intro from './Intro';
+import Subject from './Subject';
+import Data from './Data';
+import Results from './Results';
 
 class Step extends Component {
   static propTypes = {

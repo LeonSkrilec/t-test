@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { changeCalculatorStep } from '../../support/routing';
-import Intro from './Intro.js';
-import Subject from './Subject.js';
-import InputData from './InputData.js';
-import Results from './Results.js';
+import Intro from './Intro';
+import Subject from './Subject';
+import InputData from './InputData';
+import Results from './Results';
 
 class Step extends Component {
   static propTypes = {

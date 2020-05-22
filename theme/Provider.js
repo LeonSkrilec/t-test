@@ -81,7 +81,7 @@ const theme = props => {
       },
       h3: {
         fontFamily: RalewayBold,
-        fontSize: '2rem',
+        fontSize: '1.5rem',
         '@media (min-width:800px)': {
           fontSize: '2.5rem'
         },

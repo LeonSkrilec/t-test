@@ -10,7 +10,7 @@ export default function SideNav() {
     <List>
       {calculators.list.map(calculator => (
         <Link
-          href={`${calculators.baseFolder}/[slug]`}
+          href={`${calculators.baseFolder}/[name]`}
           as={`${calculators.baseFolder}/${calculator.slug}`}
           key={calculator.slug}
         >

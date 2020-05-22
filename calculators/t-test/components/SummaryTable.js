@@ -1,21 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper
-} from '@material-ui/core';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@material-ui/core';
 
-const getInputDataRows = (
-  number_of_samples,
-  data,
-  proportions_or_means,
-  results
-) => {
+const getInputDataRows = (number_of_samples, data, proportions_or_means, results, two_tailed) => {
   let rows = [
     {
       name: 'n',
@@ -44,10 +31,7 @@ const getInputDataRows = (
           { value: 'Povprečje' },
           { value: data.samples[0].mean, align: 'right' },
           {
-            value:
-              number_of_samples === 2
-                ? data.samples[1].mean
-                : data.hypothetical_mean,
+            value: number_of_samples === 2 ? data.samples[1].mean : data.hypothetical_mean,
             align: 'right'
           }
         ]
@@ -73,10 +57,7 @@ const getInputDataRows = (
           { value: 'Delež' },
           { value: data.samples[0].proportion, align: 'right' },
           {
-            value:
-              number_of_samples === 2
-                ? data.samples[1].proportion
-                : data.hypothetical_proportion,
+            value: number_of_samples === 2 ? data.samples[1].proportion : data.hypothetical_proportion,
             align: 'right'
           }
         ]
@@ -95,14 +76,14 @@ const getInputDataRows = (
           align: 'right',
           variant: 'head'
         },
-        { value: results.tValue.toFixed(2), variant: 'head' }
+        { value: results.tValue.toFixed(3), variant: 'head' }
       ]
     },
     {
       name: 'p-value',
       columns: [
         { value: 'p vrednost', span: 2, align: 'right', variant: 'head' },
-        { value: results.pValue.toFixed(2), variant: 'head' }
+        { value: two_tailed ? results.pValue.toFixed(3) : (results.pValue / 2).toFixed(3), variant: 'head' }
       ]
     }
   ];
@@ -116,7 +97,8 @@ function SummaryTable(props) {
     props.number_of_samples,
     props.data,
     props.proportions_or_means,
-    props.results
+    props.results,
+    props.two_tailed
   );
 
   return (
@@ -126,9 +108,7 @@ function SummaryTable(props) {
           <TableRow>
             <TableCell>Podatek</TableCell>
             <TableCell align="right">Vzorec 1</TableCell>
-            <TableCell align="right">
-              {props.number_of_samples === 1 ? 'Vrednost' : 'Vzorec 2'}
-            </TableCell>
+            <TableCell align="right">{props.number_of_samples === 1 ? 'Vrednost' : 'Vzorec 2'}</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -139,7 +119,7 @@ function SummaryTable(props) {
                   key={row.name + index}
                   component="th"
                   scope="row"
-                  colspan={col.span || 1}
+                  colSpan={col.span || 1}
                   align={col.align || 'left'}
                   variant={col.variant || 'body'}
                 >
@@ -158,7 +138,8 @@ SummaryTable.propTypes = {
   data: PropTypes.object.isRequired,
   results: PropTypes.object.isRequired,
   number_of_samples: PropTypes.number.isRequired,
-  proportions_or_means: PropTypes.string.isRequired
+  proportions_or_means: PropTypes.string.isRequired,
+  two_tailed: PropTypes.bool.isRequired
 };
 
 export default SummaryTable;

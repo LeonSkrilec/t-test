@@ -15,6 +15,7 @@
     "@material-ui/core": "^4.9.3",
     "@material-ui/icons": "^4.9.1",
     "@svgr/webpack": "^5.1.0",
+    "jstat": "^1.9.3",
     "lodash.debounce": "^4.0.8",
     "next": "^9.2.1",
     "next-images": "^1.4.0",
@@ -26,7 +27,6 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
     "simple-react-validator": "^1.4.4",
-    "simple-statistics": "^7.0.8",
     "styled-components": "^4.4.1",
     "ttf-loader": "^1.0.2"
   },

@@ -1,15 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  Grid,
-  Container,
-  Radio,
-  RadioGroup,
-  FormControlLabel,
-  FormControl,
-  FormLabel,
-  Box
-} from '@material-ui/core';
+import { Grid, Container, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, Box } from '@material-ui/core';
 import {
   setNumberOfSamples,
   setCalculationSubject,
@@ -30,12 +21,9 @@ class Subject extends Component {
     // setNumberOfSamples and setCalculationSubject are dipsatch methods connected to REDUX.
     // They are defined at the bottom with redux connect() function
     // On value change we dispatch an action to REDUX store which will trigger a reducer and update value in the application state
-    if (name === 'number_of_samples')
-      this.props.setNumberOfSamples(parseInt(value));
-    else if (name === 'proportions_or_means')
-      this.props.setCalculationSubject(value);
-    else if (name === 'equal_variances')
-      this.props.setOptions({ equal_variances: value == 'true' });
+    if (name === 'number_of_samples') this.props.setNumberOfSamples(parseInt(value));
+    else if (name === 'proportions_or_means') this.props.setCalculationSubject(value);
+    else if (name === 'equal_variances') this.props.setOptions({ equal_variances: value == 'true' });
   };
   previousClickHandler = () => {
     changeCalculatorStep('t-test', 'intro');
@@ -65,11 +53,9 @@ class Subject extends Component {
       <Container maxWidth="sm">
         <form noValidate autoComplete="off">
           <Grid container spacing={3}>
-            <Grid item xs={6}>
+            <Grid item sm={6}>
               <FormControl>
-                <FormLabel style={{ marginBottom: '15px' }}>
-                  Število vzorcev
-                </FormLabel>
+                <FormLabel style={{ marginBottom: '15px' }}>Število vzorcev</FormLabel>
                 <RadioGroup
                   aria-label="number-of-samples"
                   name="number_of_samples"
@@ -89,12 +75,26 @@ class Subject extends Component {
                   />
                 </RadioGroup>
               </FormControl>
+              {this.props.number_of_samples === 2 && (
+                <Box mt={3}>
+                  <FormControl>
+                    <FormLabel style={{ marginBottom: '15px' }}>Sta populacijski varianci enaki?</FormLabel>
+                    <RadioGroup
+                      aria-label="equality-of-variances"
+                      name="equal_variances"
+                      onChange={e => this.handleChange(e)}
+                      value={this.props.options.equal_variances}
+                    >
+                      <FormControlLabel value={true} control={<Radio />} label="Varianci sta enaki" />
+                      <FormControlLabel value={false} control={<Radio />} label="Varianci nista enaki (Welch t-test)" />
+                    </RadioGroup>
+                  </FormControl>
+                </Box>
+              )}
             </Grid>
-            <Grid item xs={6}>
+            <Grid item sm={6}>
               <FormControl>
-                <FormLabel style={{ marginBottom: '15px' }}>
-                  Primerjava povprečji ali deležev?
-                </FormLabel>
+                <FormLabel style={{ marginBottom: '15px' }}>Primerjava povprečji ali deležev?</FormLabel>
                 <RadioGroup
                   aria-label="difference-of-proportions-or-means"
                   name="proportions_or_means"
@@ -116,37 +116,6 @@ class Subject extends Component {
               </FormControl>
             </Grid>
           </Grid>
-
-          {this.props.number_of_samples === 2 && (
-            <Box mt={3}>
-              <Grid container spacing={3}>
-                <Grid item xs={6}>
-                  <FormControl>
-                    <FormLabel style={{ marginBottom: '15px' }}>
-                      Sta populacijski varianci enaki?
-                    </FormLabel>
-                    <RadioGroup
-                      aria-label="equality-of-variances"
-                      name="equal_variances"
-                      onChange={e => this.handleChange(e)}
-                      value={this.props.options.equal_variances}
-                    >
-                      <FormControlLabel
-                        value={true}
-                        control={<Radio />}
-                        label="Varianci sta enaki"
-                      />
-                      <FormControlLabel
-                        value={false}
-                        control={<Radio />}
-                        label="Varianci nista enaki (Welch t-test)"
-                      />
-                    </RadioGroup>
-                  </FormControl>
-                </Grid>
-              </Grid>
-            </Box>
-          )}
 
           <PageControls
             nextText="naprej"

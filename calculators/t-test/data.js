@@ -2,11 +2,7 @@ import React from 'react';
 import { Container, Grid, FormLabel } from '@material-ui/core';
 import PageControls from './components/PageControls';
 import { connect } from 'react-redux';
-import {
-  setCalculationData,
-  setStepCompleted,
-  setResults
-} from '../../store/calculators/t-test/actionCreators';
+import { setCalculationData, setStepCompleted, setResults } from '../../store/calculators/t-test/actionCreators';
 
 import { getFields } from './helpers/dataFieldsList';
 import DataInput from './components/DataInput';
@@ -76,9 +72,7 @@ class Data extends React.Component {
       return field;
     });
 
-    return isDataValid
-      ? this.onDataValid()
-      : this.setState({ fields: validatedFields });
+    return isDataValid ? this.onDataValid() : this.setState({ fields: validatedFields });
   };
 
   onDataValid() {
@@ -121,19 +115,11 @@ class Data extends React.Component {
 
   renderField(field) {
     // Render TextField
-    return (
-      <DataInput
-        key={field.id}
-        {...field}
-        onChange={this.handleChange}
-      ></DataInput>
-    );
+    return <DataInput key={field.id} {...field} onChange={this.handleChange}></DataInput>;
   }
 
   getField(name, column) {
-    return this.state.fields.find(
-      field => field.name === name && field.column == column
-    );
+    return this.state.fields.find(field => field.name === name && field.column == column);
   }
 
   render() {
@@ -141,23 +127,17 @@ class Data extends React.Component {
       <Container maxWidth="sm">
         <form noValidate autoComplete="off" onSubmit={this.onSubmit}>
           <Grid container spacing={3}>
-            <Grid item xs={6}>
+            <Grid item sm={6}>
               <FormLabel component="p" style={{ marginBottom: '15px' }}>
                 Opisne statistike prvega vzorca
               </FormLabel>
-              {this.state.fields.map(field =>
-                field.column === 0 ? this.renderField(field) : null
-              )}
+              {this.state.fields.map(field => (field.column === 0 ? this.renderField(field) : null))}
             </Grid>
-            <Grid item xs={6}>
+            <Grid item sm={6}>
               <FormLabel component="p" style={{ marginBottom: '15px' }}>
-                {this.props.number_of_samples === 2
-                  ? 'Opisne statistike drugega vzorca'
-                  : 'Hipotetična vrednost'}
+                {this.props.number_of_samples === 2 ? 'Opisne statistike drugega vzorca' : 'Hipotetična vrednost'}
               </FormLabel>
-              {this.state.fields.map(field =>
-                field.column === 1 ? this.renderField(field) : null
-              )}
+              {this.state.fields.map(field => (field.column === 1 ? this.renderField(field) : null))}
             </Grid>
           </Grid>
 
@@ -165,9 +145,7 @@ class Data extends React.Component {
             nextText="naprej"
             previousPage="nazaj"
             nextClickHandler={this.nextClickHandler}
-            previousClickHandler={() =>
-              changeCalculatorStep('t-test', 'subject')
-            }
+            previousClickHandler={() => changeCalculatorStep('t-test', 'subject')}
             nextButtonType="submit"
           ></PageControls>
         </form>

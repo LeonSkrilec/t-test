@@ -1,14 +1,6 @@
-import {
-  cumulativeStdNormalProbability,
-  errorFunction
-} from 'simple-statistics';
+import jStat from 'jstat';
 
-export async function calculate({
-  number_of_samples,
-  proportions_or_means,
-  data,
-  options
-}) {
+export async function calculate({ number_of_samples, proportions_or_means, data, options }) {
   console.log('calculating ...');
   console.log(number_of_samples, proportions_or_means, data, options);
 
@@ -24,41 +16,35 @@ export async function calculate({
           options.paired_samples
         );
       } else {
-        results.tValue = oneSampleMeans(
-          data.samples[0],
-          data.hypothetical_mean
-        );
+        results.tValue = oneSampleMeans(data.samples[0], data.hypothetical_mean);
       }
     } else {
       if (number_of_samples === 2) {
-        results.tValue = twoSamplesProportions(
-          data.samples[0],
-          data.samples[1]
-        );
+        results.tValue = twoSamplesProportions(data.samples[0], data.samples[1]);
       } else {
-        results.tValue = oneSampleProportions(
-          data.samples[0],
-          data.hypothetical_proportion
-        );
+        results.tValue = oneSampleProportions(data.samples[0], data.hypothetical_proportion);
       }
     }
 
+    const degrees_of_freedom =
+      number_of_samples === 2
+        ? data.samples[0].number_of_units + data.samples[1].number_of_units
+        : data.samples[0].number_of_units;
+
     // Get p-value from t-value
-    results.pValue = calculatePvalue(results.tValue, options.two_tailed);
+    results.pValue = calculatePvalue(results.tValue, degrees_of_freedom, options.two_tailed ? 2 : 1);
     resolve(results);
   });
 }
 
 /**
  * Calculates area under students t distribution given t-Value
- * Method taken from https://simplestatistics.org/docs/#cumulativestdnormalprobability
- * I am not 100% sure how it calculates p value, but it returns correct values.
- * TODO: Maybe make this calculation more clear.
- * @param {number} tValue
  */
-function calculatePvalue(tValue, two_tailed) {
-  const p = 0.5 + 0.5 * errorFunction(tValue / Math.sqrt(2));
-  return two_tailed ? p * 2 : p;
+
+function calculatePvalue(tValue, degrees_of_freedom, sides = 2) {
+  const p = jStat.ttest(tValue, degrees_of_freedom, sides);
+  console.log('p', p);
+  return p;
 }
 
 function twoSamplesMeans(sample_1_data, sample_2_data, equal_variances) {

@@ -1,21 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import {
-  Container,
-  Grid,
-  FormControl,
-  FormLabel,
-  FormControlLabel,
-  RadioGroup,
-  Radio
-} from '@material-ui/core';
+import { Container, Grid, FormControl, FormLabel, FormControlLabel, RadioGroup, Radio } from '@material-ui/core';
 
-import {
-  setOptions,
-  setStepCompleted,
-  setResults
-} from '../../store/calculators/t-test/actionCreators';
+import { setOptions, setStepCompleted, setResults } from '../../store/calculators/t-test/actionCreators';
 import PageControls from './components/PageControls';
 import { changeCalculatorStep } from '../../support/routing';
 import { calculate } from './helpers/calculation';
@@ -63,25 +51,15 @@ class Options extends React.Component {
             {this.props.number_of_samples === 2 && (
               <Grid item sm={6}>
                 <FormControl>
-                  <FormLabel style={{ marginBottom: '15px' }}>
-                    Sta populacijski varianci enaki?
-                  </FormLabel>
+                  <FormLabel style={{ marginBottom: '15px' }}>Sta populacijski varianci enaki?</FormLabel>
                   <RadioGroup
                     aria-label="equality-of-variances"
                     name="equal_variances"
                     onChange={e => this.handleChange(e, 'equal_variances')}
                     value={this.props.options.equal_variances}
                   >
-                    <FormControlLabel
-                      value={true}
-                      control={<Radio />}
-                      label="Varianci sta enaki"
-                    />
-                    <FormControlLabel
-                      value={false}
-                      control={<Radio />}
-                      label="Varianci nista enaki (Welch t-test)"
-                    />
+                    <FormControlLabel value={true} control={<Radio />} label="Varianci sta enaki" />
+                    <FormControlLabel value={false} control={<Radio />} label="Varianci nista enaki (Welch t-test)" />
                   </RadioGroup>
                 </FormControl>
               </Grid>
@@ -89,25 +67,15 @@ class Options extends React.Component {
 
             <Grid item sm={6}>
               <FormControl>
-                <FormLabel style={{ marginBottom: '15px' }}>
-                  Dvo ali eno stranski test?
-                </FormLabel>
+                <FormLabel style={{ marginBottom: '15px' }}>Dvo ali eno stranski test?</FormLabel>
                 <RadioGroup
                   aria-label="two-tailed"
                   name="two_tailed"
                   onChange={e => this.handleChange(e, 'two_tailed')}
                   value={this.props.options.two_tailed}
                 >
-                  <FormControlLabel
-                    value={true}
-                    control={<Radio />}
-                    label="Dvostranski"
-                  />
-                  <FormControlLabel
-                    value={false}
-                    control={<Radio />}
-                    label="Enostranski"
-                  />
+                  <FormControlLabel value={true} control={<Radio />} label="Dvostranski" />
+                  <FormControlLabel value={false} control={<Radio />} label="Enostranski" />
                 </RadioGroup>
               </FormControl>
             </Grid>

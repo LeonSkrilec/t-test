@@ -78,8 +78,6 @@ class Step extends Component {
         return <Subject></Subject>;
       case 'data':
         return <Data></Data>;
-      case 'options':
-        return <Options></Options>;
       case 'results':
         return <Results></Results>;
       default:

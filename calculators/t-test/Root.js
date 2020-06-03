@@ -27,7 +27,7 @@ function RootFunctional(props) {
               {props.step === 'intro' ? (
                 <Button
                   component={LinkButton}
-                  href="/calculators"
+                  href="/kalkulatorji"
                   variant="text"
                   color="primary"
                   startIcon={<ChevronLeftIcon></ChevronLeftIcon>}
@@ -37,8 +37,8 @@ function RootFunctional(props) {
               ) : (
                 <Button
                   component={LinkButton}
-                  href="/calculators/[name]/[step]"
-                  as="/calculators/t-test/intro"
+                  href="/kalkulatorji/[name]/[step]"
+                  as="/kalkulatorji/t-test/intro"
                   variant="text"
                   color="primary"
                   startIcon={<ChevronLeftIcon></ChevronLeftIcon>}

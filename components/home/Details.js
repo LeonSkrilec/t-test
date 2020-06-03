@@ -12,9 +12,8 @@ export default function Details() {
             <Grid item sm={6}>
               <Typography variant="h2">Enostavna uporaba</Typography>
               <Typography variant="body1">
-                Izognite se preglavicam učenja uporabe zahtevnih statističnih
-                programov, kot so SPSS, R ali STATA, za potrebe osnovnih
-                statističnih kalkulacij.
+                Izognite se preglavicam učenja uporabe zahtevnih statističnih programov, kot so SPSS, R ali STATA, za
+                potrebe osnovnih statističnih kalkulacij.
               </Typography>
             </Grid>
             <Grid item sm={6}></Grid>
@@ -25,13 +24,10 @@ export default function Details() {
           <Grid container spacing={0}>
             <Grid item sm={6}></Grid>
             <Grid item sm={6}>
-              <Typography variant="h2">
-                Jasna interpretacija rezultatov
-              </Typography>
+              <Typography variant="h2">Jasna interpretacija rezultatov</Typography>
               <Typography variant="body1">
-                Najpomembnejši vidik statistične analize je interpretacija
-                rezultatov. Aplikacija T-test vam ponuja jasno tekstovno in
-                grafično interpretacijo rezultatov.
+                Najpomembnejši vidik statistične analize je interpretacija rezultatov. Aplikacija T-test vam ponuja
+                jasno tekstovno in grafično interpretacijo rezultatov.
               </Typography>
             </Grid>
           </Grid>
@@ -42,11 +38,9 @@ export default function Details() {
             <Grid item sm={6}>
               <Typography variant="h2">Teoretske opredelitve</Typography>
               <Typography variant="body1">
-                Številke brez teoretskega ozadja in konteksta so le številke.
-                Zato vam v aplikaciji T-test pred vsakim izračunom predstavimo
-                teoretsko ozadje izračuna ter predstavimo predpostavke, ki jih
-                morajo vaši podatki izpolnjevati za uspešen in nepristranski
-                izračun.
+                Številke brez teoretskega ozadja in konteksta so le številke. Zato vam v aplikaciji T-test pred vsakim
+                izračunom predstavimo teoretsko ozadje izračuna ter predstavimo predpostavke, ki jih morajo vaši podatki
+                izpolnjevati za uspešen in nepristranski izračun.
               </Typography>
             </Grid>
             <Grid item sm={6}></Grid>
@@ -54,13 +48,8 @@ export default function Details() {
         </Box>
 
         <Box mt={8} textAlign="center">
-          <Link href="/calculators">
-            <Button
-              variant="contained"
-              size="large"
-              color="primary"
-              endIcon={<LaunchIcon />}
-            >
+          <Link href="/kalkulatorji">
+            <Button variant="contained" size="large" color="primary" endIcon={<LaunchIcon />}>
               Začni z uporabo
             </Button>
           </Link>

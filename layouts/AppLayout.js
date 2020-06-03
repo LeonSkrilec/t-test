@@ -86,7 +86,7 @@ function AppLayout(props) {
             <MenuIcon />
           </IconButton>
           <div className={classes.logo}>
-            <Link href="/calculators">
+            <Link href="/kalkulatorji">
               <img src={LogoHorizontal} alt="t-test" />
             </Link>
           </div>

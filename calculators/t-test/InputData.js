@@ -77,7 +77,7 @@ class InputData extends React.Component {
 
   onDataValid() {
     // TODO: 1. Update calculator data in store. 2. Route to next page
-    console.log('data is valid! Lets go to next page ho.');
+    //console.log('data is valid! Lets go to next page ho.');
     // Save local fields data to central redux store.
 
     let data = {

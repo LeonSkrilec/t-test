@@ -42,7 +42,7 @@ export default function HeroBanner() {
         <Typography variant="h1">Odprtokodna aplikacija za online statistične izračune</Typography>
       </div>
       <div className="start">
-        <Link href="/calculators">
+        <Link href="/kalkulatorji">
           <Button component="a" variant="contained" size="large" endIcon={<LaunchIcon />}>
             Začni
           </Button>

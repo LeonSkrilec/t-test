@@ -1,6 +1,6 @@
 export default {
   // THIS DATA IS CURRENTLY NOT USED ANYWHERE
-  baseFolder: '/calculators',
+  baseFolder: '/kalkulatorji',
   list: [
     {
       name: 't-test',

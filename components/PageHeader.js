@@ -34,7 +34,7 @@ function LinkTab(props) {
 export default function PageHeader() {
   const classes = useStyles();
   return (
-    <AppBar position="static" color="white">
+    <AppBar position="sticky" color="default">
       <Container disableGutters>
         <Toolbar>
           <div className={classes.logo}>
@@ -44,7 +44,7 @@ export default function PageHeader() {
           </div>
           <Tabs aria-label="nav tabs" value="home" className={classes.tabs}>
             <LinkTab label="Domov" href="/" value="home" />
-            <LinkTab label="Aplikacija" href="/calculators" />
+            <LinkTab label="Aplikacija" href="/kalkulatorji" />
           </Tabs>
         </Toolbar>
       </Container>

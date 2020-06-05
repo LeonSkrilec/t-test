@@ -16,23 +16,28 @@ function Interpretation(props) {
 
       {samples === 2 && statistic === 'means' && (
         <Typography variant="body1">
-          Vzorčni aritmetični sredini se {reject ? '' : 'ne'} razlikujeta statistično značilno.
+          Pri {significance * 100}% stopnji značilnosti se vzorčni aritmetični sredini{' '}
+          <strong>{reject ? '' : 'ne'} razlikujeta</strong> statistično značilno.
         </Typography>
       )}
       {samples === 2 && statistic === 'proportions' && (
         <Typography variant="body1">
-          Vzorčna deleža se {reject ? '' : 'ne'} razlikujeta statistično značilno.
+          Pri {significance * 100}% stopnji značilnosti se vzorčna deleža{' '}
+          <strong>{reject ? '' : 'ne'} razlikujeta</strong> statistično značilno.
         </Typography>
       )}
 
       {samples === 1 && statistic === 'means' && (
         <Typography variant="body1">
-          Vzorčna aritmetična sredina se {reject ? '' : 'ne'} razlikuje statistično značilno od hipotetične vrednosti.
+          Pri {significance * 100}% stopnji značilnosti se vzorčna aritmetična sredina{' '}
+          <strong>{reject ? '' : 'ne'} razlikuje</strong>
+          statistično značilno od hipotetične vrednosti.
         </Typography>
       )}
       {samples === 1 && statistic === 'proportions' && (
         <Typography variant="body1">
-          Vzorčni delež se {reject ? '' : 'ne'} razlikuje statistično značilno od hipotetične vrednosti.
+          Pri {significance * 100}% stopnji značilnosti se vzorčni delež{' '}
+          <strong>{reject ? '' : 'ne'} razlikuje </strong>statistično značilno od hipotetične vrednosti.
         </Typography>
       )}
     </>

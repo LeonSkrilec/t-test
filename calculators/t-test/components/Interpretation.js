@@ -17,20 +17,20 @@ function Interpretation(props) {
       {samples === 2 && statistic === 'means' && (
         <Typography variant="body1">
           Pri {significance * 100}% stopnji značilnosti se vzorčni aritmetični sredini{' '}
-          <strong>{reject ? '' : 'ne'} razlikujeta</strong> statistično značilno.
+          <strong>{reject ? '' : 'ne'} razlikujeta </strong> statistično značilno.
         </Typography>
       )}
       {samples === 2 && statistic === 'proportions' && (
         <Typography variant="body1">
           Pri {significance * 100}% stopnji značilnosti se vzorčna deleža{' '}
-          <strong>{reject ? '' : 'ne'} razlikujeta</strong> statistično značilno.
+          <strong>{reject ? '' : 'ne'} razlikujeta </strong> statistično značilno.
         </Typography>
       )}
 
       {samples === 1 && statistic === 'means' && (
         <Typography variant="body1">
           Pri {significance * 100}% stopnji značilnosti se vzorčna aritmetična sredina{' '}
-          <strong>{reject ? '' : 'ne'} razlikuje</strong>
+          <strong>{reject ? '' : 'ne'} razlikuje </strong>
           statistično značilno od hipotetične vrednosti.
         </Typography>
       )}

@@ -35,7 +35,6 @@ class Step extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.step === this.props.step) return;
-
     this.checkStep();
   }
 

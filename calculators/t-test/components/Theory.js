@@ -16,25 +16,6 @@ export default function Theory() {
         lahko <strong>bodisi razlike v deležih bodisi aritmetično sredino</strong> med dvema vzorcema ali pa med enim
         vzorcem in hipotetično (populacijsko) vrednostjo.
       </Typography>
-      <Typography variant="h5" gutterBottom>
-        Zakaj t-test?
-      </Typography>
-      <Typography variant="body1" paragraph>
-        V raziskovalnem procesu največkrat ne moremo preverjati hipotez na množici vseh raziskovalnih subjektov vendar v
-        ta namen vzamemo iz populacije slučajen vzorec na katerem izračunamo relevantne statistike, ki nas zanimajo -
-        največkrat je to vzorčno povprečje ali delež.
-      </Typography>
-
-      <Typography variant="body1" paragraph>
-        Na tem mestu pa se pojavi vprašanje.{' '}
-        <strong>Ali lahko zaključimo, da so dobljene vzorčne statistike značilne tudi za populacijo?</strong>
-      </Typography>
-
-      <Typography variant="body1" paragraph>
-        To moramo preveriti z ustreznim testom, ki upošteva značilnosti verjetnostnega vzorčenja. Primer takega testa je
-        Studentov t-test, ki nam pove, <strong>ali je razlika med vzorčno in populacijsko statistiko značilna</strong>{' '}
-        ali pa je le posledica naključne izbire enot v vzorec.
-      </Typography>
 
       {!isReadingMore && (
         <Box mt={3}>
@@ -46,6 +27,26 @@ export default function Theory() {
 
       {isReadingMore && (
         <>
+          <Typography variant="h5" gutterBottom>
+            Zakaj t-test?
+          </Typography>
+          <Typography variant="body1" paragraph>
+            V raziskovalnem procesu največkrat ne moremo preverjati hipotez na množici vseh raziskovalnih subjektov
+            vendar v ta namen vzamemo iz populacije slučajen vzorec na katerem izračunamo relevantne statistike, ki nas
+            zanimajo - največkrat je to vzorčno povprečje ali delež.
+          </Typography>
+
+          <Typography variant="body1" paragraph>
+            Na tem mestu pa se pojavi vprašanje.{' '}
+            <strong>Ali lahko zaključimo, da so dobljene vzorčne statistike značilne tudi za populacijo?</strong>
+          </Typography>
+
+          <Typography variant="body1" paragraph>
+            To moramo preveriti z ustreznim testom, ki upošteva značilnosti verjetnostnega vzorčenja. Primer takega
+            testa je Studentov t-test, ki nam pove,{' '}
+            <strong>ali je razlika med vzorčno in populacijsko statistiko značilna</strong> ali pa je le posledica
+            naključne izbire enot v vzorec.
+          </Typography>
           <Typography variant="h5">Preverjanje domnev</Typography>
           <Typography variant="body1" paragraph>
             V družboslovju po navadi preverjamo pravilnost populacijskih domnev z analizo vzorčnih podatkov.

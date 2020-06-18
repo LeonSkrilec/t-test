@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import PageControls from './components/PageControls';
 import Theory from './components/Theory';
 import { changeCalculatorStep } from '../../support/routing';
-import { Grid, Box, Fab } from '@material-ui/core';
+import { Grid, Box, Fab, Tooltip } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
@@ -25,6 +25,9 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up('sm')]: {
       display: 'block'
     }
+  },
+  tooltip: {
+    fontSize: '0.9rem'
   }
 }));
 
@@ -48,21 +51,37 @@ export default function IntroFunctional() {
         <Typography variant="body1" paragraph component="div">
           <ul>
             <li>
-              <strong>Enostavni slučajni vzorec</strong>
-              <br></br>
-              Enote so bile izbrane v vzorec s postopkom enostavnega slučajnega vzorca. Vsaka enota ima enako verjetnost
-              izbora v vzorec.
+              <Tooltip
+                title="Enote so bile izbrane v vzorec s postopkom enostavnega slučajnega vzorca. Vsaka enota ima enako verjetnost
+              izbora v vzorec."
+                placement="top-start"
+                arrow
+                classes={classes}
+              >
+                <strong>Enostavni slučajni vzorec</strong>
+              </Tooltip>
             </li>
             <li>
-              <strong>Neodvisnost enot</strong>
-              <br></br>
-              Enote v vzorcu so neodvisne med seboj. To zagotovimo z vzročenjem z zamenjavo ali pa z velikostjo vzorca
-              manjšo od 10% velikosti populacije.
+              <Tooltip
+                title="Enote v vzorcu so neodvisne med seboj. To zagotovimo z vzročenjem z zamenjavo ali pa z velikostjo vzorca
+              manjšo od 10% velikosti populacije."
+                placement="top-start"
+                arrow
+                classes={classes}
+              >
+                <strong>Neodvisnost enot</strong>
+              </Tooltip>
             </li>
             <li>
-              <strong>Normalna porazdelitev</strong>
-              <br></br>Preverimo ali je porazdelitev spremenljivke na populaciji približno normalna, ali pa zagotovimo
-              dovolj velik vzorec (N > 30).
+              <Tooltip
+                title="Preverimo ali je porazdelitev spremenljivke na populaciji približno normalna, ali pa zagotovimo
+              dovolj velik vzorec (N > 30)."
+                placement="top-start"
+                arrow
+                classes={classes}
+              >
+                <strong>Normalna porazdelitev</strong>
+              </Tooltip>
             </li>
           </ul>
         </Typography>

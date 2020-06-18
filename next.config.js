@@ -2,7 +2,7 @@ const withImages = require('next-images');
 const path = require('path');
 /* eslint-disable no-undef */
 module.exports = withImages({
-  exclude: path.resolve(__dirname, 'assets/images/logos'),
+  exclude: [path.resolve(__dirname, 'assets/images/logos'), path.resolve(__dirname, 'calculators/sample-size')],
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,

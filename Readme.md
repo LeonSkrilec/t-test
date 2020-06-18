@@ -26,12 +26,14 @@ Seveda pa lahko prispevate tudi drug kalkulator, predlagate izboljšave obstoje�
 
 Preden začnete predlagam da preletite 5. poglavje v [diplomskem delu](https://drive.google.com/file/d/1qrIca0nqug3YVbjzqTpdZicOAuOASImq/view). Seznanite se tudi z [Next.js](https://nextjs.org/) in [Material UI](https://material-ui.com/).
 
+Naredite fork tega repozitorija in naredite nov branch, katerega bomo potem združili v master. Najbolje, da je ime brancha kar enak imenu novega kalkulatorja.
+
 ### Vzpostavitev lokalnega okolja
 
 ```
-> git clone https://github.com/LeonSkrilec/t-test.git
 > npm install
 > npm run dev
+> obišči http://localhost:3000
 ```
 
 ### Dodajanje kalkulatorja

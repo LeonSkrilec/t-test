@@ -9,7 +9,7 @@ const fields = {
     // Positive whole number
     value: '',
     label: 'Velikost vzorca',
-    helperText: 'Število enot v vzorcu',
+    placeholder: 'Vnesi število enot',
     name: 'number_of_units',
     error: false,
     id: 'number_of_units',
@@ -24,6 +24,7 @@ const fields = {
     value: '',
     type: 'number',
     label: 'Aritmetična sredina',
+    placeholder: 'Vnesi število',
     name: 'mean',
     id: 'mean',
     validation: {
@@ -36,6 +37,7 @@ const fields = {
     value: '',
     type: 'number',
     label: 'Varianca',
+    placeholder: 'Vnesi število',
     name: 'variance',
     id: 'variance',
     validation: {
@@ -48,9 +50,9 @@ const fields = {
     value: '',
     type: 'number',
     label: 'Delež (%)',
+    placeholder: 'Vnesi število med 0 in 100',
     name: 'proportion',
     id: 'proportion',
-    helperText: 'Delež dobljen na vzorcu. Vnesi število med 0 in 100.',
     validation: {
       rules: 'required|numeric|min:0,num|max:100,num',
       errorMessage: 'Vnesite število med 0 in 100.'
@@ -61,6 +63,7 @@ const fields = {
     value: '',
     type: 'number',
     label: 'Hipotetično povprečje',
+    placeholder: 'Vnesi število',
     name: 'hypothetical_mean',
     id: 'hypothetical_mean',
     helperText: 'Povprečje s katerim primerjamo vzorčno povprečje',
@@ -75,9 +78,9 @@ const fields = {
     type: 'number',
     label: 'Hipotetični delež (%)',
     name: 'hypothetical_proportion',
+    placeholder: 'Vnesi število med 0 in 100',
     id: 'hypothetical_proportion',
-    helperText:
-      'Delež s katerim primerjamo vzorčni delež. Vnesi število med 0 in 100.',
+    helperText: 'Delež s katerim primerjamo vzorčni delež.',
     validation: {
       rules: 'required|numeric|min:0,num|max:100,num',
       errorMessage: 'Vnesite število med 0 in 100'
@@ -134,10 +137,7 @@ const fieldsMap = [
 const getFields = ({ proportions_or_means, number_of_samples }) => {
   // Which fields to return?
   return fieldsMap.find(fieldMap => {
-    return (
-      fieldMap.number_of_samples === number_of_samples &&
-      fieldMap.proportions_or_means === proportions_or_means
-    );
+    return fieldMap.number_of_samples === number_of_samples && fieldMap.proportions_or_means === proportions_or_means;
   });
 };
 

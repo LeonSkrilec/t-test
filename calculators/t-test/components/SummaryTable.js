@@ -8,14 +8,14 @@ const getInputDataRows = (number_of_samples, data, proportions_or_means, results
       name: 'n',
       columns: [
         {
-          value: 'Število enot'
+          value: '<strong>Število enot</strong>'
         },
         {
-          value: data.samples[0].number_of_units,
+          value: `n<sub>1</sub> = ${data.samples[0].number_of_units}`,
           align: 'right'
         },
         {
-          value: number_of_samples === 2 ? data.samples[1].number_of_units : '',
+          value: number_of_samples === 2 ? `n<sub>2</sub>  = ${data.samples[1].number_of_units}` : '',
           align: 'right'
         }
       ]
@@ -28,10 +28,10 @@ const getInputDataRows = (number_of_samples, data, proportions_or_means, results
       {
         name: 'mean',
         columns: [
-          { value: 'Povprečje' },
-          { value: data.samples[0].mean, align: 'right' },
+          { value: '<strong>Povprečje</strong>' },
+          { value: `μ<sub>1</sub> = ${data.samples[0].mean}`, align: 'right' },
           {
-            value: number_of_samples === 2 ? data.samples[1].mean : data.hypothetical_mean,
+            value: number_of_samples === 2 ? `μ<sub>2</sub> = ${data.samples[1].mean}` : data.hypothetical_mean,
             align: 'right'
           }
         ]
@@ -39,10 +39,10 @@ const getInputDataRows = (number_of_samples, data, proportions_or_means, results
       {
         name: 'variance',
         columns: [
-          { value: 'Varianca' },
-          { value: data.samples[0].variance, align: 'right' },
+          { value: '<strong>Varianca</strong>' },
+          { value: `s<sub>1</sub> = ${data.samples[0].variance}`, align: 'right' },
           {
-            value: number_of_samples === 2 ? data.samples[1].variance : '',
+            value: number_of_samples === 2 ? `s<sub>2</sub> = ${data.samples[1].variance}` : '',
             align: 'right'
           }
         ]
@@ -54,7 +54,7 @@ const getInputDataRows = (number_of_samples, data, proportions_or_means, results
       {
         name: 'proportions',
         columns: [
-          { value: 'Delež' },
+          { value: '<strong>Delež</strong>' },
           { value: data.samples[0].proportion, align: 'right' },
           {
             value: number_of_samples === 2 ? data.samples[1].proportion : data.hypothetical_proportion,
@@ -76,14 +76,19 @@ const getInputDataRows = (number_of_samples, data, proportions_or_means, results
           align: 'right',
           variant: 'head'
         },
-        { value: results.tValue.toFixed(3), variant: 'head' }
+        { value: `<strong>${results.tValue.toFixed(3)}</strong>`, variant: 'head' }
       ]
     },
     {
       name: 'p-value',
       columns: [
         { value: 'p vrednost', span: 2, align: 'right', variant: 'head' },
-        { value: two_tailed ? results.pValue.toFixed(3) : (results.pValue / 2).toFixed(3), variant: 'head' }
+        {
+          value: two_tailed
+            ? `<strong>${results.pValue.toFixed(3)}</strong>`
+            : `<strong>${(results.pValue / 2).toFixed(3)}</strong>`,
+          variant: 'head'
+        }
       ]
     }
   ];
@@ -103,12 +108,16 @@ function SummaryTable(props) {
 
   return (
     <TableContainer component={Paper}>
-      <Table aria-label="Input table">
+      <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Podatek</TableCell>
-            <TableCell align="right">Vzorec 1</TableCell>
-            <TableCell align="right">{props.number_of_samples === 1 ? 'Vrednost' : 'Vzorec 2'}</TableCell>
+            <TableCell></TableCell>
+            <TableCell align="right">
+              <strong>Vzorec 1</strong>
+            </TableCell>
+            <TableCell align="right">
+              {props.number_of_samples === 1 ? <strong>Vrednost</strong> : <strong>Vzorec 2</strong>}
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -123,7 +132,7 @@ function SummaryTable(props) {
                   align={col.align || 'left'}
                   variant={col.variant || 'body'}
                 >
-                  {col.value}
+                  <span dangerouslySetInnerHTML={{ __html: col.value }}></span>
                 </TableCell>
               ))}
             </TableRow>

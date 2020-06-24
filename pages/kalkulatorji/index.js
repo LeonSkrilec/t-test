@@ -19,6 +19,12 @@ const useStyles = makeStyles(theme => ({
       objectFit: 'cover',
       borderRadius: '100%'
     }
+  },
+  lowOpacity: {
+    opacity: 0.5
+  },
+  textButton: {
+    marginRight: 15
   }
 }));
 export default function index() {
@@ -29,7 +35,7 @@ export default function index() {
         <Grid container spacing={3}>
           {calculators.list.map(calculator => (
             <Grid item sm={6} xs={12} key={calculator.slug}>
-              <Paper elevation={3}>
+              <Paper elevation={3} className={!calculator.enabled ? classes.lowOpacity : ''}>
                 <Box p={2}>
                   <Typography variant="caption">{calculator.category}</Typography>
                   <Typography variant="h5">{calculator.title}</Typography>
@@ -49,6 +55,19 @@ export default function index() {
                         </Box>
                       </Grid>
                       <Grid item>
+                        {calculator.firstStepName && (
+                          <Button
+                            className={classes.textButton}
+                            component={LinkButton}
+                            href={`${calculators.baseFolder}/[name]/[step]`}
+                            as={`${calculators.baseFolder}/${calculator.slug}/${calculator.firstStepName}`}
+                            variant="text"
+                            color="primary"
+                          >
+                            Izračun
+                          </Button>
+                        )}
+
                         {calculator.enabled && (
                           <Button
                             component={LinkButton}

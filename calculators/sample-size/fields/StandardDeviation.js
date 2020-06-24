@@ -11,25 +11,27 @@ const useStyles = makeStyles(theme => ({
     width: '100%'
   }
 }));
-function ErrorMargin(props) {
+function RatioErrorMargin(props) {
   const classes = useStyles();
   return (
     <FormControl className={classes.formControl}>
       <TextField
         id="error"
-        label="Območje napake (%)"
+        label="Populacijski standardni odklon"
         variant="outlined"
         type="number"
-        name="error"
+        name="stddev"
+        placeholder="Vnesi število"
         onChange={props.onChange}
-        helperText="Za koliko % dopuščamo odstopanje vzorčne vrednosti od populacijske."
+        value={props.value}
       />
     </FormControl>
   );
 }
 
-ErrorMargin.propTypes = {
-  onChange: PropTypes.func.isRequired
+RatioErrorMargin.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.number
 };
 
-export default ErrorMargin;
+export default RatioErrorMargin;

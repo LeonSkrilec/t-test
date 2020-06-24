@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid, FormLabel } from '@material-ui/core';
+import { Container, Grid, Typography } from '@material-ui/core';
 import PageControls from './components/PageControls';
 import { connect } from 'react-redux';
 import { setCalculationData, setStepCompleted, setResults } from '../../store/calculators/t-test/actionCreators';
@@ -128,15 +128,13 @@ class InputData extends React.Component {
         <form noValidate autoComplete="off" onSubmit={this.onSubmit}>
           <Grid container spacing={3}>
             <Grid item sm={6}>
-              <FormLabel component="p" style={{ marginBottom: '15px' }}>
-                Opisne statistike prvega vzorca
-              </FormLabel>
+              <Typography variant="body1">Prvi vzorec</Typography>
               {this.state.fields.map(field => (field.column === 0 ? this.renderField(field) : null))}
             </Grid>
             <Grid item sm={6}>
-              <FormLabel component="p" style={{ marginBottom: '15px' }}>
-                {this.props.number_of_samples === 2 ? 'Opisne statistike drugega vzorca' : 'Hipotetična vrednost'}
-              </FormLabel>
+              <Typography variant="body1">
+                {this.props.number_of_samples === 2 ? 'Drugi vzorec' : 'Hipotetična vrednost'}
+              </Typography>
               {this.state.fields.map(field => (field.column === 1 ? this.renderField(field) : null))}
             </Grid>
           </Grid>

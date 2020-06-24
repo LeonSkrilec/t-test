@@ -35,17 +35,24 @@ function twoSampleHypothesis(data, sides, statistic) {
           H<sub>0</sub>: {sign}
           <sub>0</sub> = {sign}
           <sub>1</sub>
-        </i>
+        </i>{' '}
+        : {statistic === 'proportions' ? 'deleža sta enaka' : 'povprečji sta enaki'}
       </Typography>
+
       <Typography variant="body2">
         <i>
-          H<sub>0</sub>: {samplesData[0]} = {samplesData[1]}
-        </i>
-      </Typography>
-      <Typography variant="body2">
-        <i>
-          H<sub>1</sub>: {samplesData[0]} {comparator} {samplesData[1]}
-        </i>
+          H<sub>1</sub>: {sign}
+          <sub>0</sub> {comparator} {sign}
+          <sub>1</sub>
+        </i>{' '}
+        :{' '}
+        {statistic === 'proportions'
+          ? sides === 2
+            ? 'deleža se razlikujeta'
+            : 'prvi delež je večji od drugega'
+          : sides === 2
+          ? 'povprečji se razlikujeta'
+          : 'prvo povprečje je večje od drugega'}
       </Typography>
     </>
   );

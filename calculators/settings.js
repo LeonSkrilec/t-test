@@ -9,6 +9,7 @@ export default {
       shown: true,
       title: 'Studentov t-test',
       category: 'Statistično sklepanje',
+      firstStepName: 'subject',
       description: 'Preverite ali se vzorčna in hipotetična vrednost statistično značilno razlikujeta.',
       author: {
         image: require(`../assets/images/authors/leon.jpeg`),
@@ -21,6 +22,7 @@ export default {
       enabled: true,
       shown: true,
       title: 'Izračun velikosti vzorca',
+      firstStepName: 'calculation',
       category: 'Vzorčenje',
       description: 'Kako velik vzorec potrebujem za svojo raziskavo?',
       author: {

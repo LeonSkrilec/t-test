@@ -11,26 +11,28 @@ const useStyles = makeStyles(theme => ({
     width: '100%'
   }
 }));
-
-function Population(props) {
+function RatioErrorMargin(props) {
   const classes = useStyles();
   return (
     <FormControl className={classes.formControl}>
       <TextField
-        id="population"
-        label="Velikost populacije"
-        placeholder="Vnesi število"
+        id="error"
+        label="Območje napake"
         variant="outlined"
         type="number"
-        name="population"
+        name="proportionError"
+        placeholder="Vnesi število"
         onChange={props.onChange}
+        helperText="Za koliko se vzorčno povprečje lahko razlikuje od populacijskega."
+        value={props.value}
       />
     </FormControl>
   );
 }
 
-Population.propTypes = {
-  onChange: PropTypes.func.isRequired
+RatioErrorMargin.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.number
 };
 
-export default Population;
+export default RatioErrorMargin;

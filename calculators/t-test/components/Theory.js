@@ -14,7 +14,13 @@ export default function Theory() {
         <strong>sklepanjem iz vzorca na populacijo</strong>. S t-testom preverimo, ali so razlike med dobljenimi
         vzorčnimi statistikami statistično značilne ali pa so le posledica naključne izbire enot v vzorec. Primerjamo
         lahko <strong>bodisi razlike v deležih bodisi aritmetično sredino</strong> med dvema vzorcema ali pa med enim
-        vzorcem in hipotetično (populacijsko) vrednostjo.
+        vzorcem in hipotetično (populacijsko) vrednostjo.<br></br>
+        <small>
+          <i>
+            Vir: Ferligoj, A., Lozar, K. M., & Žiberna, A. (2013). Osnove statistike na prosojnicah. Študijsko gradivo
+            pri predmetu Statistika.
+          </i>
+        </small>
       </Typography>
 
       {!isReadingMore && (

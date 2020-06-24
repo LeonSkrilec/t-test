@@ -9,6 +9,7 @@ function DataInput(props) {
       label={props.label}
       variant="outlined"
       helperText={props.helperText}
+      placeholder={props.placeholder}
       type={props.type}
       margin="normal"
       name={props.name}
@@ -24,6 +25,7 @@ DataInput.propTypes = {
   helperText: PropTypes.string,
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   onChange: PropTypes.func.isRequired
 };
 

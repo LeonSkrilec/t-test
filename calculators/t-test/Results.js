@@ -70,7 +70,7 @@ class Intro extends React.Component {
               <Grid container spacing={3}>
                 <Grid item>
                   <FormControl>
-                    <Typography variant="overline">Signifikanca</Typography>
+                    <Typography variant="overline">Stopnja značilnosti</Typography>
                     <ButtonGroup size="small" color="primary" aria-label="outlined primary button group">
                       {this.state.significances.map(sig => (
                         <Button
@@ -109,27 +109,7 @@ class Intro extends React.Component {
                   data={data}
                 ></Hypothesis>
               </Box>
-              <Box my={2}>
-                <Typography variant="body2">
-                  Izračunana eksperimentalna vrednost testne statistike{' '}
-                  <strong>
-                    <i>t = {results.tValue.toFixed(3)}</i>
-                  </strong>
-                </Typography>
-                <Typography variant="body2">
-                  Natančna stopnja značilnosti{' '}
-                  <strong>
-                    <i>p = {options.two_tailed ? results.pValue.toFixed(3) : (results.pValue / 2).toFixed(3)}</i>
-                  </strong>{' '}
-                  pri {options.two_tailed ? ' dvostranskem ' : ' enostranskem '} testu.
-                </Typography>
-                <Typography variant="body2">
-                  Izbrana signifikanca{' '}
-                  <strong>
-                    <i> α = {options.significance}</i>
-                  </strong>
-                </Typography>
-              </Box>
+
               <Box my={2}>
                 <Interpretation
                   pvalue={options.two_tailed ? results.pValue : results.pValue / 2}

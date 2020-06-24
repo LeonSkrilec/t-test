@@ -9,34 +9,43 @@ function Interpretation(props) {
   return (
     <>
       <Typography variant="body1">
-        Izračunana stopnja značilnosti p = {props.pvalue.toFixed(3)} je {reject ? 'manjša' : 'večja'} od izbrane
-        signifikance α = {significance}, zato{' '}
-        {reject ? 'ničelno domnevo lahko zavrnemo' : 'ničelne domneve ne moremo zavrniti'}.
+        Natančna stopnja značilnosti <i>p = {props.pvalue.toFixed(3)}</i> je {reject ? 'manjša' : 'večja'} od izbrane
+        stopnje značilnosti <i>α = {significance}</i>, zato{' '}
+        {reject ? (
+          <span>
+            ničelno domnevo <strong>lahko zavrnemo</strong>
+          </span>
+        ) : (
+          <span>
+            ničelne domneve <strong>ne moremo zavrniti</strong>
+          </span>
+        )}
+        .
       </Typography>
 
       {samples === 2 && statistic === 'means' && (
         <Typography variant="body1">
-          Pri {significance * 100}% stopnji značilnosti se vzorčni aritmetični sredini{' '}
+          Pri <i>{significance * 100}%</i> stopnji značilnosti se vzorčni aritmetični sredini{' '}
           <strong>{reject ? '' : 'ne'} razlikujeta </strong> statistično značilno.
         </Typography>
       )}
       {samples === 2 && statistic === 'proportions' && (
         <Typography variant="body1">
-          Pri {significance * 100}% stopnji značilnosti se vzorčna deleža{' '}
+          Pri <i>{significance * 100}%</i> stopnji značilnosti se vzorčna deleža{' '}
           <strong>{reject ? '' : 'ne'} razlikujeta </strong> statistično značilno.
         </Typography>
       )}
 
       {samples === 1 && statistic === 'means' && (
         <Typography variant="body1">
-          Pri {significance * 100}% stopnji značilnosti se vzorčna aritmetična sredina{' '}
+          Pri <i>{significance * 100}%</i> stopnji značilnosti se vzorčna aritmetična sredina{' '}
           <strong>{reject ? '' : 'ne'} razlikuje </strong>
           statistično značilno od hipotetične vrednosti.
         </Typography>
       )}
       {samples === 1 && statistic === 'proportions' && (
         <Typography variant="body1">
-          Pri {significance * 100}% stopnji značilnosti se vzorčni delež{' '}
+          Pri <i>{significance * 100}%</i> stopnji značilnosti se vzorčni delež{' '}
           <strong>{reject ? '' : 'ne'} razlikuje </strong>statistično značilno od hipotetične vrednosti.
         </Typography>
       )}

@@ -67,27 +67,42 @@ class Calculation extends React.Component {
 
   isAbleToCalculate() {
     if (this.state.data.estimatedStatistic === 'mean') {
-      const { confidence, meanError, stddev } = this.state.data;
+      const { confidence, meanError, stddev, cv } = this.state.data;
       if (!confidence || !meanError || !stddev) return this.cantCalculate();
       if (isNaN(confidence) || isNaN(meanError) || isNaN(stddev)) return this.cantCalculate();
-      return this.calculateMeanSize(confidence, meanError, stddev);
+
+      return this.state.data.errorType === "se" ? this.calculateMeanSizeSE(confidence, meanError, stddev) : this.calculateMeanSizeCV(confidence, cv, stddev);
     } else {
-      const { confidence, estimatedProportion, proportionError } = this.state.data;
+      const { confidence, estimatedProportion, proportionError, cv } = this.state.data;
       if (!confidence || !estimatedProportion || !proportionError) return this.cantCalculate();
       if (estimatedProportion < 0 || estimatedProportion > 100) return this.cantCalculate();
       if (proportionError < 0 || proportionError > 100) return this.cantCalculate();
       if (isNaN(confidence) || isNaN(estimatedProportion) || isNaN(proportionError)) return this.cantCalculate();
-      return this.calculateProportionSize(confidence, estimatedProportion, proportionError);
+      return this.state.data.errorType === "se" ? this.calculateProportionSizeSE(confidence, estimatedProportion, proportionError) : this.calculateProportionSizeCV(confidence, estimatedProportion, cv);
     }
   }
 
-  calculateMeanSize(confidence, meanError, stddev) {
+  calculateMeanSizeSE(confidence, meanError, stddev) {
     const z = this.confidenceZmap[confidence];
     const n = Math.pow((z * stddev) / meanError, 2);
     this.setState({ sampleSize: Math.round(n) });
   }
 
-  calculateProportionSize(confidence, estimatedProportion, proportionError) {
+  calculateProportionSizeSE(confidence, estimatedProportion, proportionError) {
+    const z = this.confidenceZmap[confidence];
+    const errorDecimal = proportionError / 100;
+    const estimatedDecimal = estimatedProportion / 100;
+    const n = (Math.pow(z, 2) * estimatedDecimal * (1 - estimatedDecimal)) / Math.pow(errorDecimal, 2);
+    this.setState({ sampleSize: Math.round(n) });
+  }
+
+  calculateMeanSizeCV(confidence, cv, stddev) {
+    const z = this.confidenceZmap[confidence];
+    const n = Math.pow(stddev, 2) / (Math.pow(cv, 2) * 1)
+    this.setState({ sampleSize: Math.round(n) });
+  }
+
+  calculateProportionSizeCV(confidence, estimatedProportion, cv) {
     const z = this.confidenceZmap[confidence];
     const errorDecimal = proportionError / 100;
     const estimatedDecimal = estimatedProportion / 100;

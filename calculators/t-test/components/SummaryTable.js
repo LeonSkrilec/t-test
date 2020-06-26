@@ -31,7 +31,10 @@ const getInputDataRows = (number_of_samples, data, proportions_or_means, results
           { value: '<strong>Povprečje</strong>' },
           { value: `μ<sub>1</sub> = ${data.samples[0].mean}`, align: 'right' },
           {
-            value: number_of_samples === 2 ? `μ<sub>2</sub> = ${data.samples[1].mean}` : data.hypothetical_mean,
+            value:
+              number_of_samples === 2
+                ? `μ<sub>2</sub> = ${data.samples[1].mean}`
+                : `μ<sub>h</sub> = ${data.hypothetical_mean}`,
             align: 'right'
           }
         ]
@@ -55,9 +58,12 @@ const getInputDataRows = (number_of_samples, data, proportions_or_means, results
         name: 'proportions',
         columns: [
           { value: '<strong>Delež</strong>' },
-          { value: data.samples[0].proportion, align: 'right' },
+          { value: `π<sub>1</sub> = ${data.samples[0].proportion}`, align: 'right' },
           {
-            value: number_of_samples === 2 ? data.samples[1].proportion : data.hypothetical_proportion,
+            value:
+              number_of_samples === 2
+                ? `π<sub>2</sub> = ${data.samples[1].proportion}`
+                : `π<sub>h</sub> = ${data.hypothetical_proportion}`,
             align: 'right'
           }
         ]

@@ -11,13 +11,25 @@ function oneSampleHypothesis(data, sides, statistic) {
     <>
       <Typography variant="body2">
         <i>
-          H<sub>0</sub>: {sign} = {hypothetical}
-        </i>
+          H<sub>0</sub>: {sign}
+          <sub>1</sub> = {sign}
+          <sub>h</sub>
+        </i>{' '}
+        : {statistic === 'proportions' ? 'deleža sta enaka' : 'povprečji sta enaki'}
       </Typography>
       <Typography variant="body2">
         <i>
-          H<sub>1</sub>: {sign} {comparator} {hypothetical}
+          H<sub>1</sub>: {sign}
+          <sub>1</sub> {comparator} {sign} <sub>h</sub>
         </i>
+        :{' '}
+        {statistic === 'proportions'
+          ? sides === 2
+            ? 'deleža se razlikujeta'
+            : 'prvi delež je večji od drugega'
+          : sides === 2
+          ? 'povprečji se razlikujeta'
+          : 'prvo povprečje je večje od drugega'}
       </Typography>
     </>
   );

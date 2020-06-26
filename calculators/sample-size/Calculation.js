@@ -11,6 +11,7 @@ import MeanErrorMargin from './fields/MeanErrorMargin';
 import StandardDeviation from './fields/StandardDeviation';
 import EstimatedProportion from './fields/EstimatedProportion';
 import VariationCoefficient from './fields/VariationCoefficient';
+import EstimatedMean from './fields/EstimatedMean';
 
 class Calculation extends React.Component {
   constructor(props) {
@@ -34,6 +35,7 @@ class Calculation extends React.Component {
           estimatedProportion: 25, // Percent
           confidence: 0.95, // Confidence interval
           population: null,
+          estimatedMean: 5,
           cv: 0.05
         },
         sampleSize: 0
@@ -67,18 +69,22 @@ class Calculation extends React.Component {
 
   isAbleToCalculate() {
     if (this.state.data.estimatedStatistic === 'mean') {
-      const { confidence, meanError, stddev, cv } = this.state.data;
-      if (!confidence || !meanError || !stddev) return this.cantCalculate();
-      if (isNaN(confidence) || isNaN(meanError) || isNaN(stddev)) return this.cantCalculate();
+      const { confidence, meanError, stddev, cv, estimatedMean } = this.state.data;
+      if (!confidence || !meanError || !stddev || !estimatedMean) return this.cantCalculate();
+      if (isNaN(confidence) || isNaN(meanError) || isNaN(stddev) || isNaN(estimatedMean)) return this.cantCalculate();
 
-      return this.state.data.errorType === "se" ? this.calculateMeanSizeSE(confidence, meanError, stddev) : this.calculateMeanSizeCV(confidence, cv, stddev);
+      return this.state.data.errorType === 'se'
+        ? this.calculateMeanSizeSE(confidence, meanError, stddev)
+        : this.calculateMeanSizeCV(cv, stddev, estimatedMean);
     } else {
       const { confidence, estimatedProportion, proportionError, cv } = this.state.data;
       if (!confidence || !estimatedProportion || !proportionError) return this.cantCalculate();
       if (estimatedProportion < 0 || estimatedProportion > 100) return this.cantCalculate();
       if (proportionError < 0 || proportionError > 100) return this.cantCalculate();
       if (isNaN(confidence) || isNaN(estimatedProportion) || isNaN(proportionError)) return this.cantCalculate();
-      return this.state.data.errorType === "se" ? this.calculateProportionSizeSE(confidence, estimatedProportion, proportionError) : this.calculateProportionSizeCV(confidence, estimatedProportion, cv);
+      return this.state.data.errorType === 'se'
+        ? this.calculateProportionSizeSE(confidence, estimatedProportion, proportionError)
+        : this.calculateProportionSizeCV(estimatedProportion, cv);
     }
   }
 
@@ -96,17 +102,14 @@ class Calculation extends React.Component {
     this.setState({ sampleSize: Math.round(n) });
   }
 
-  calculateMeanSizeCV(confidence, cv, stddev) {
-    const z = this.confidenceZmap[confidence];
-    const n = Math.pow(stddev, 2) / (Math.pow(cv, 2) * 1)
+  calculateMeanSizeCV(cv, stddev, estimatedMean) {
+    const n = Math.pow(stddev, 2) / (Math.pow(cv, 2) * Math.pow(estimatedMean, 2));
     this.setState({ sampleSize: Math.round(n) });
   }
 
-  calculateProportionSizeCV(confidence, estimatedProportion, cv) {
-    const z = this.confidenceZmap[confidence];
-    const errorDecimal = proportionError / 100;
-    const estimatedDecimal = estimatedProportion / 100;
-    const n = (Math.pow(z, 2) * estimatedDecimal * (1 - estimatedDecimal)) / Math.pow(errorDecimal, 2);
+  calculateProportionSizeCV(estimatedProportion, cv) {
+    const proportion = estimatedProportion / 100;
+    const n = (1 - proportion) / (Math.pow(cv, 2) * proportion);
     this.setState({ sampleSize: Math.round(n) });
   }
 
@@ -157,20 +160,32 @@ class Calculation extends React.Component {
                         onChange={this.handleChange.bind(this)}
                       ></VariationCoefficient>
                     )}
-                    {this.state.data.estimatedStatistic === 'mean' ? (
+                    {this.state.data.estimatedStatistic === 'mean' && (
                       <StandardDeviation
                         onChange={this.handleChange.bind(this)}
                         value={this.state.data.stddev}
                       ></StandardDeviation>
-                    ) : (
+                    )}
+                    {this.state.data.estimatedStatistic === 'proportion' && (
                       <EstimatedProportion
                         onChange={this.handleChange.bind(this)}
                         value={this.state.data.estimatedProportion}
                       ></EstimatedProportion>
                     )}
+                    {this.state.data.estimatedStatistic === 'mean' && this.state.data.errorType === 'cv' && (
+                      <EstimatedMean
+                        onChange={this.handleChange.bind(this)}
+                        value={this.state.data.estimatedMean}
+                      ></EstimatedMean>
+                    )}
                   </Grid>
                   <Grid item xs={6}>
-                    <Confidence onChange={this.handleChange.bind(this)} value={this.state.data.confidence}></Confidence>
+                    {this.state.data.errorType !== 'cv' && (
+                      <Confidence
+                        onChange={this.handleChange.bind(this)}
+                        value={this.state.data.confidence}
+                      ></Confidence>
+                    )}
                   </Grid>
                 </Grid>
               </Grid>

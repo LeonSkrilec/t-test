@@ -10,5 +10,16 @@ module.exports = withImages({
     });
 
     return config;
+  },
+  exportPathMap: async function() {
+    return {
+      '/': { page: '/' },
+      '/kalkulatorji': { page: '/kalkulatorji' },
+      '/kalkulatorji/t-test': { page: '/kalkulatorji/t-test', query: { title: 'Studentov t-test kalkulator' } },
+      '/kalkulatorji/velikost-vzorca': {
+        page: 'kalkulatorji/velikost-vzorca',
+        query: { title: 'Izračun velikosti vzorca' }
+      }
+    };
   }
 });

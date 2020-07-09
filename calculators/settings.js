@@ -31,6 +31,20 @@ export default {
       }
     },
     {
+      name: 'odkrivanje-razlik',
+      slug: 'odkrivanje-razlik',
+      enabled: true,
+      shown: true,
+      title: 'Odkrivanje razlik',
+      firstStepName: 'calculation',
+      category: 'Vzorčenje',
+      description: 'Kako velik vzorec potrebujem za odkrivanje razlik?',
+      author: {
+        image: require(`../assets/images/authors/leon.jpeg`),
+        name: 'Leon Škrilec'
+      }
+    },
+    {
       name: 'opisne-statistike',
       slug: 'opisne-statistike',
       enabled: false,

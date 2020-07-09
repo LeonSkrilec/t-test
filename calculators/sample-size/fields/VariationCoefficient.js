@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Select, MenuItem, InputLabel, FormControl, FormHelperText } from '@material-ui/core';
+import { Select, MenuItem, InputLabel, FormControl } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({

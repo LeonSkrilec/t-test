@@ -20,7 +20,7 @@ export async function calculate({ number_of_samples, proportions_or_means, data,
       }
     } else {
       if (number_of_samples === 2) {
-        results.tValue = twoSamplesProportions(data.samples[0], data.samples[1]);
+        results.tValue = twoSamplesProportions(data.samples[0], data.samples[1], options.equal_variances);
       } else {
         results.tValue = oneSampleProportions(data.samples[0], data.hypothetical_proportion);
       }
@@ -50,7 +50,7 @@ function calculatePvalue(tValue, degrees_of_freedom, sides = 2) {
 function twoSamplesMeans(sample_1_data, sample_2_data, equal_variances) {
   const u1 = sample_1_data.mean;
   const u2 = sample_2_data.mean;
-  const n1 = sample_2_data.number_of_units;
+  const n1 = sample_1_data.number_of_units; 
   const n2 = sample_2_data.number_of_units;
   const v1 = sample_1_data.variance;
   const v2 = sample_2_data.variance;
@@ -74,14 +74,23 @@ function twoSamplesMeans(sample_1_data, sample_2_data, equal_variances) {
  * @param {*} equal_variances
  * @param {*} paired_samples
  */
-function twoSamplesProportions(sample_1_data, sample_2_data) {
+function twoSamplesProportions(sample_1_data, sample_2_data, equal_variances) {
   const p1 = sample_1_data.proportion / 100;
   const p2 = sample_2_data.proportion / 100;
+  const n1 = sample_1_data.number_of_units;
+  const n2 = sample_2_data.number_of_units;
+  const v1 = ((1 - p1)*(p1*n1))/n1;
+  const v2 = ((1 - p2)*(p2*n2))/n2;
 
+  if (equal_variances){
+  const weightedVariance = ((n1 - 1) * v1 + (n2 - 1) * v2) / (n1 + n2 - 2);
+  return (p1 - p2) / Math.sqrt(weightedVariance * (1 / n1 + 1 / n2));
+  } else {
   const SE1 = Math.sqrt((p1 * (1 - p1)) / sample_1_data.number_of_units);
   const SE2 = Math.sqrt((p2 * (1 - p2)) / sample_2_data.number_of_units);
   const combinedSE = Math.sqrt(Math.pow(SE1, 2) + Math.pow(SE2, 2));
   return (p1 - p2) / combinedSE;
+  }
 }
 
 /**
@@ -106,7 +115,7 @@ function oneSampleMeans(sampleData, hypothetical_mean) {
 function oneSampleProportions(sampleData, hypothetical_proportion) {
   const p = sampleData.proportion / 100;
   const p0 = hypothetical_proportion / 100;
-  const q = 1 - p;
-  const SE = Math.sqrt((p * q) / sampleData.number_of_units);
+  const q = 1 - p0; //changed p to p0
+  const SE = Math.sqrt((p0 * q) / sampleData.number_of_units); 
   return (p - p0) / SE;
 }
